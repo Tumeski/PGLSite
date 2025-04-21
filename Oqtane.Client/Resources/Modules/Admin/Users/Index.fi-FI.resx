@@ -1,0 +1,522 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Confirm.User.Delete" xml:space="preserve">
+    <value>Haluatko varmasti poistaa {0}?</value>
+  </data>
+  <data name="AddUser.Text" xml:space="preserve">
+    <value>Lisää käyttäjä</value>
+  </data>
+  <data name="DeleteUser.Header" xml:space="preserve">
+    <value>Poista käyttäjä</value>
+  </data>
+  <data name="AllowRegistration.HelpText" xml:space="preserve">
+    <value>Haluatko, että anonyymit kävijät voivat rekisteröityä tilille sivustolla?</value>
+  </data>
+  <data name="AllowRegistration.Text" xml:space="preserve">
+    <value>Salli rekisteröinti?</value>
+  </data>
+  <data name="Error.SaveSiteSettings" xml:space="preserve">
+    <value>Virhe Asetusten tallentaminen</value>
+  </data>
+  <data name="Settings.Heading" xml:space="preserve">
+    <value>Asetukset</value>
+  </data>
+  <data name="Success.SaveSiteSettings" xml:space="preserve">
+    <value>Asetukset tallennettu onnistuneesti</value>
+  </data>
+  <data name="Users.Heading" xml:space="preserve">
+    <value>Käyttäjät</value>
+  </data>
+  <data name="DeleteUser.Text" xml:space="preserve">
+    <value>Poista</value>
+  </data>
+  <data name="EditUser.Text" xml:space="preserve">
+    <value>Muokkaa</value>
+  </data>
+  <data name="Roles.Text" xml:space="preserve">
+    <value>Roolit</value>
+  </data>
+  <data name="LockoutDuration.HelpText" xml:space="preserve">
+    <value>Kuinka monta minuuttia käyttäjä on lukittu pois käytöstä</value>
+  </data>
+  <data name="LockoutDuration.Text" xml:space="preserve">
+    <value>Lukituksen kesto:</value>
+  </data>
+  <data name="MaximumFailures.HelpText" xml:space="preserve">
+    <value>Sisäänkirjautumisyritysten enimmäismäärä ennen kuin käyttäjä lukitaan ulos.</value>
+  </data>
+  <data name="MaximumFailures.Text" xml:space="preserve">
+    <value>Enimmäisviat:</value>
+  </data>
+  <data name="RequireDigit.HelpText" xml:space="preserve">
+    <value>Ilmoita, onko salasanoissa oltava numero</value>
+  </data>
+  <data name="RequireDigit.Text" xml:space="preserve">
+    <value>Vaadi numero?</value>
+  </data>
+  <data name="RequiredLength.HelpText" xml:space="preserve">
+    <value>Salasanan vähimmäispituus</value>
+  </data>
+  <data name="RequiredLength.Text" xml:space="preserve">
+    <value>Vähimmäispituus:</value>
+  </data>
+  <data name="RequireLower.HelpText" xml:space="preserve">
+    <value>Ilmoita, onko salasanoissa oltava pienaakkoset merkit</value>
+  </data>
+  <data name="RequireLower.Text" xml:space="preserve">
+    <value>Vaaditaan pienaakkoset?</value>
+  </data>
+  <data name="RequirePunctuation.HelpText" xml:space="preserve">
+    <value>Ilmoita, jos salasanojen on sisällettävä muita kuin aakkosnumeerisia merkkejä (esim. välimerkkejä).</value>
+  </data>
+  <data name="RequirePunctuation.Text" xml:space="preserve">
+    <value>Vaaditaanko välimerkkejä?</value>
+  </data>
+  <data name="RequireUpper.HelpText" xml:space="preserve">
+    <value>Ilmoita, onko salasanoissa oltava isoja kirjaimia.</value>
+  </data>
+  <data name="RequireUpper.Text" xml:space="preserve">
+    <value>Vaaditaan isoja kirjaimia?</value>
+  </data>
+  <data name="Success.UpdateConfig.Restart" xml:space="preserve">
+    <value>Konfiguraatio päivitetty. Valitse Käynnistä sovellus uudelleen, jotta muutokset aktivoituvat.</value>
+  </data>
+  <data name="UniqueCharacters.HelpText" xml:space="preserve">
+    <value>Salasanan on sisällettävä vähintään yksipuolisia merkkejä.</value>
+  </data>
+  <data name="UniqueCharacters.Text" xml:space="preserve">
+    <value>Ainutlaatuiset hahmot:</value>
+  </data>
+  <data name="AllowSiteLogin.HelpText" xml:space="preserve">
+    <value>Haluatko sallia käyttäjien kirjautua sisään käyttämällä käyttäjätunnusta ja salasanaa, joita hallinnoidaan paikallisesti tällä sivustolla? Huomaa, että tämä vaihtoehto kannattaa poistaa käytöstä vain, jos olet jo onnistuneesti määrittänyt ulkoisen kirjautumistoiminnon tarjoajan, sillä muuten saatat lukita itsesi pois sivustolta.</value>
+  </data>
+  <data name="AllowSiteLogin.Text" xml:space="preserve">
+    <value>Salli sisäänkirjautuminen?</value>
+  </data>
+  <data name="Authority.HelpText" xml:space="preserve">
+    <value>Identiteetin tarjoajaan liittyvä viranomaisen url-osoite tai liikkeeseenlaskijan url-osoite.</value>
+  </data>
+  <data name="Authority.Text" xml:space="preserve">
+    <value>Viranomainen:</value>
+  </data>
+  <data name="AuthorizationUrl.HelpText" xml:space="preserve">
+    <value>Päätepiste valtuutuskoodin hankkimista varten</value>
+  </data>
+  <data name="AuthorizationUrl.Text" xml:space="preserve">
+    <value>Valtuutus Url:</value>
+  </data>
+  <data name="ClientID.HelpText" xml:space="preserve">
+    <value>Identiteetin tarjoajan asiakastunnus</value>
+  </data>
+  <data name="ClientID.Text" xml:space="preserve">
+    <value>Asiakastunnus:</value>
+  </data>
+  <data name="ClientSecret.HelpText" xml:space="preserve">
+    <value>Identiteetin tarjoajan asiakassalaisuus</value>
+  </data>
+  <data name="ClientSecret.Text" xml:space="preserve">
+    <value>Asiakassalaisuus:</value>
+  </data>
+  <data name="CreateUsers.HelpText" xml:space="preserve">
+    <value>Haluatko, että uudet käyttäjät luodaan automaattisesti? Jos poistat tämän vaihtoehdon käytöstä, käyttäjien on oltava jo rekisteröityneet sivustolle, jotta he voivat kirjautua sisään ulkoisella käyttäjätunnuksellaan.</value>
+  </data>
+  <data name="CreateUsers.Text" xml:space="preserve">
+    <value>Luoda uusia käyttäjiä?</value>
+  </data>
+  <data name="DomainFilter.HelpText" xml:space="preserve">
+    <value>Anna kaikki sähköpostialueen suodatuskriteerit (pilkuilla erotettuna). Poissuljettavien verkkotunnusten eteen on laitettava huutomerkki (!). Esimerkiksi 'microsoft.com,!hotmail.com' sisältäisi microsoft.com-sähköpostiosoitteet mutta ei hotmail.com-sähköpostiosoitteita.</value>
+  </data>
+  <data name="DomainFilter.Text" xml:space="preserve">
+    <value>Verkkotunnussuodatin:</value>
+  </data>
+  <data name="EmailClaimType.HelpText" xml:space="preserve">
+    <value>Määritä valinnaisesti identiteetin tarjoajan toimittaman sähköpostiosoiteväitteen tyyppinimi. Tyypillinen arvo on \</value>
+  </data>
+  <data name="EmailClaimType.Text" xml:space="preserve">
+    <value>Sähköpostivaatimus:</value>
+  </data>
+  <data name="ExternalLoginSettings.Heading" xml:space="preserve">
+    <value>Ulkoisen kirjautumisen asetukset</value>
+  </data>
+  <data name="LockoutSettings.Heading" xml:space="preserve">
+    <value>Lukitusasetukset</value>
+  </data>
+  <data name="MetadataUrl.HelpText" xml:space="preserve">
+    <value>Havaintopäätepiste, josta saadaan tämän identiteetin tarjoajan metatietoja. Määritä vain, jos identiteetin tarjoaja ei käytä standardimenetelmää (esim. /.well-known/openid-configuration).</value>
+  </data>
+  <data name="MetadataUrl.Text" xml:space="preserve">
+    <value>Metatiedot Url:</value>
+  </data>
+  <data name="PasswordSettings.Heading" xml:space="preserve">
+    <value>Salasana-asetukset</value>
+  </data>
+  <data name="PKCE.HelpText" xml:space="preserve">
+    <value>Ilmoittaa, tukeeko tunnistuspalveluntarjoaja todistusavainta koodinvaihtoa varten (PKCE).</value>
+  </data>
+  <data name="PKCE.Text" xml:space="preserve">
+    <value>Käytätkö PKCE:tä?</value>
+  </data>
+  <data name="ProviderName.HelpText" xml:space="preserve">
+    <value>Määritä ulkoisen kirjautumisen palveluntarjoajan ystävällinen nimi, joka näytetään kirjautumissivulla.</value>
+  </data>
+  <data name="ProviderName.Text" xml:space="preserve">
+    <value>Palveluntarjoajan nimi:</value>
+  </data>
+  <data name="ProviderType.HelpText" xml:space="preserve">
+    <value>Valitse ulkoisen kirjautumisen palveluntarjoajan tyyppi</value>
+  </data>
+  <data name="ProviderType.Text" xml:space="preserve">
+    <value>Palveluntarjoajan tyyppi:</value>
+  </data>
+  <data name="RedirectUrl.HelpText" xml:space="preserve">
+    <value>Uudelleenohjauksen url-osoite (tai takaisinsoitto-url-osoite), joka on yleensä rekisteröitävä identiteetin tarjoajalle.</value>
+  </data>
+  <data name="RedirectUrl.Text" xml:space="preserve">
+    <value>Uudelleenohjaus Url:</value>
+  </data>
+  <data name="Scopes.HelpText" xml:space="preserve">
+    <value>Luettelo identiteettipalveluntarjoajalta pyydettävistä laajuuksista (pilkulla erotettuna). Jos yhtään ei ole määritetty, käytetään oletusarvoisesti vakioalueita.</value>
+  </data>
+  <data name="Scopes.Text" xml:space="preserve">
+    <value>Laajuusalueet:</value>
+  </data>
+  <data name="TokenUrl.HelpText" xml:space="preserve">
+    <value>Päätepiste auth-tunnisteen hankkimista varten</value>
+  </data>
+  <data name="TokenUrl.Text" xml:space="preserve">
+    <value>Token Url:</value>
+  </data>
+  <data name="UserInfoUrl.HelpText" xml:space="preserve">
+    <value>Päätepiste käyttäjätietojen saamiseksi. Tämän pitäisi olla API-päätepiste tai sivun url-osoite, joka sisältää käyttäjän sähköpostiosoitteen.</value>
+  </data>
+  <data name="UserInfoUrl.Text" xml:space="preserve">
+    <value>Käyttäjän tiedot Url:</value>
+  </data>
+  <data name="Audience.HelpText" xml:space="preserve">
+    <value>Vaihtoehtoisesti voit antaa tunnuksen yleisön</value>
+  </data>
+  <data name="Audience.Text" xml:space="preserve">
+    <value>Yleisö:</value>
+  </data>
+  <data name="UserSettings.Heading" xml:space="preserve">
+    <value>Käyttäjän asetukset</value>
+  </data>
+  <data name="CookieName.HelpText" xml:space="preserve">
+    <value>Voit käyttää mukautettua todennusevästeen nimeä kutakin sivustoa varten. Huomaa kuitenkin, että jos haluat jakaa todennusevästeen saman verkkotunnuksen sivustojen kesken, niiden on käytettävä yhdenmukaista evästeen nimeä. Huomaa myös, että todennusevästeen nimen muuttaminen kirjaa kaikki nykyiset käyttäjät ulos.</value>
+  </data>
+  <data name="CookieName.Text" xml:space="preserve">
+    <value>Evästeen nimi:</value>
+  </data>
+  <data name="CreateToken" xml:space="preserve">
+    <value>Luo Token</value>
+  </data>
+  <data name="Issuer.HelpText" xml:space="preserve">
+    <value>Vaihtoehtoisesti merkin liikkeeseenlaskija.</value>
+  </data>
+  <data name="Issuer.Text" xml:space="preserve">
+    <value>Liikkeeseenlaskija:</value>
+  </data>
+  <data name="Lifetime.HelpText" xml:space="preserve">
+    <value>Minuuttien määrä, jonka ajan kupongin on oltava voimassa.</value>
+  </data>
+  <data name="Lifetime.Text" xml:space="preserve">
+    <value>Elinikä:</value>
+  </data>
+  <data name="Secret.HelpText" xml:space="preserve">
+    <value>Jos haluat tarjota API-käytön, määritä salaisuus, jota käytetään tunnisteiden salaamiseen. Salaisuuden tulisi olla vähintään 16 merkkiä optimaalisen turvallisuuden varmistamiseksi. Huomaa, että jos muutat tätä salaisuutta, kaikki olemassa olevat tunnukset mitätöityvät ja ne on luotava uudelleen.</value>
+  </data>
+  <data name="Secret.Text" xml:space="preserve">
+    <value>Salaisuus:</value>
+  </data>
+  <data name="Token.HelpText" xml:space="preserve">
+    <value>Valitse Luo tunniste -painike luodaksesi pitkäikäisen käyttöoikeustunnisteen (voimassa 1 vuoden). Muista säilyttää tämä tunniste turvallisessa paikassa, sillä et voi käyttää sitä tulevaisuudessa.</value>
+  </data>
+  <data name="Token.Text" xml:space="preserve">
+    <value>Merkki:</value>
+  </data>
+  <data name="TokenSettings.Heading" xml:space="preserve">
+    <value>Token-asetukset</value>
+  </data>
+  <data name="TwoFactor.HelpText" xml:space="preserve">
+    <value>Haluatko, että käyttäjät käyttävät kahden tekijän todennusta? Huomaa, että sinun tulisi käyttää Disabled (Ei käytössä) -vaihtoehtoa, kunnes olet onnistuneesti varmistanut, että Scheduled Jobs (Ajastetut työt) -kohdassa oleva Notification Job (Ilmoitustyö) on käytössä ja että Site Settings (Sivuston asetukset) -kohdassa olevat SMTP-asetukset on määritetty, tai muuten lukitset itsesi ulos.</value>
+  </data>
+  <data name="TwoFactor.Text" xml:space="preserve">
+    <value>Kaksi tekijää?</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Vammaiset</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Valinnainen</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Vaadittu</value>
+  </data>
+  <data name="LastLoginOn" xml:space="preserve">
+    <value>Viimeisin kirjautuminen</value>
+  </data>
+  <data name="IdentifierClaimType.HelpText" xml:space="preserve">
+    <value>Määritä identiteetin tarjoajan toimittaman yksilöllisen käyttäjätunnisteen väitteen tyyppinimi. Oletusarvo on \</value>
+  </data>
+  <data name="IdentifierClaimType.Text" xml:space="preserve">
+    <value>Tunnus Väite:</value>
+  </data>
+  <data name="Parameters.HelpText" xml:space="preserve">
+    <value>Määritä valinnaisesti mahdolliset lisäparametrit nimi/arvopareina, jotka lähetetään tunnistuspalveluntarjoajalle (pilkulla erotettuna, jos parametreja on useita).</value>
+  </data>
+  <data name="Parameters.Text" xml:space="preserve">
+    <value>Parametrit:</value>
+  </data>
+  <data name="RoleClaimType.HelpText" xml:space="preserve">
+    <value>Anna valinnaisesti identiteetin tarjoajan toimittaman roolit-vaatimuksen tyyppinimi (vakio oletusarvo on \</value>
+  </data>
+  <data name="RoleClaimType.Text" xml:space="preserve">
+    <value>Roolit Vaatimus:</value>
+  </data>
+  <data name="RoleClaimMappings.HelpText" xml:space="preserve">
+    <value>Anna valinnaisesti pilkulla erotettu luettelo identiteetin tarjoajan tarjoamista roolinimistä sekä vastaavuudet sivuston rooleihin. Jos esimerkiksi identiteetin tarjoaja sisältää roolinimen \</value>
+  </data>
+  <data name="RoleClaimMappings.Text" xml:space="preserve">
+    <value>Roolien väittämien kartoitukset:</value>
+  </data>
+  <data name="SynchronizeRoles.HelpText" xml:space="preserve">
+    <value>Tämä vaihtoehto lisää tai poistaa roolimäärityksiä siten, että sivuston roolit vastaavat täsmälleen identiteetin tarjoajan käyttäjälle antamia rooleja.</value>
+  </data>
+  <data name="SynchronizeRoles.Text" xml:space="preserve">
+    <value>Synkronoida roolit?</value>
+  </data>
+  <data name="ProfileClaimTypes.HelpText" xml:space="preserve">
+    <value>Anna valinnaisesti pilkulla erotettu luettelo identiteetin tarjoajan toimittamista käyttäjäprofiilin väitetyyppien nimistä sekä käyttäjäprofiilin määrittelyn mukaisista vastaavuuksista. Jos esimerkiksi identiteetin tarjoaja sisältää \</value>
+  </data>
+  <data name="ProfileClaimTypes.Text" xml:space="preserve">
+    <value>Käyttäjäprofiilin vaatimukset:</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Käyttäjän nimi</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nimi</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Sähköposti</value>
+  </data>
+  <data name="ImportUsers.Text" xml:space="preserve">
+    <value>Käyttäjien tuonti</value>
+  </data>
+  <data name="AuthFlow.Code" xml:space="preserve">
+    <value>Valtuutuskoodi</value>
+  </data>
+  <data name="AuthFlow.CodeIdToken" xml:space="preserve">
+    <value>Valtuutuskoodi + ID-tunniste</value>
+  </data>
+  <data name="AuthFlow.CodeIdTokenToken" xml:space="preserve">
+    <value>Valtuutuskoodi + ID-tunniste + käyttöoikeustunniste</value>
+  </data>
+  <data name="AuthFlow.CodeToken" xml:space="preserve">
+    <value>Valtuutuskoodi + käyttöoikeustunniste</value>
+  </data>
+  <data name="AuthFlow.IdToken" xml:space="preserve">
+    <value>ID-tunniste</value>
+  </data>
+  <data name="AuthFlow.IdTokenToken" xml:space="preserve">
+    <value>ID-tunniste + käyttöoikeustunniste</value>
+  </data>
+  <data name="AuthFlow.None" xml:space="preserve">
+    <value>Ei ole</value>
+  </data>
+  <data name="AuthFlow.Token" xml:space="preserve">
+    <value>Access Token</value>
+  </data>
+  <data name="AuthResponseType.Text" xml:space="preserve">
+    <value>Valtuutuksen vastaustyyppi:</value>
+  </data>
+  <data name="AuthResponseType.HelpText" xml:space="preserve">
+    <value>Määritä valtuutusvastauksen tyyppi. Oletusarvo on Authorization Code, jota pidetään turvallisimpana vaihtoehtona uusimman OAuth-määrittelyn perusteella.</value>
+  </data>
+  <data name="VerifyUsers.HelpText" xml:space="preserve">
+    <value>Haluatko, että nykyisten käyttäjien on suoritettava ylimääräinen sähköpostivarmennusvaihe ulkoisen kirjautumisensa linkittämiseksi? Jos poistat tämän vaihtoehdon käytöstä, nykyiset käyttäjät linkitetään automaattisesti.</value>
+  </data>
+  <data name="VerifyUsers.Text" xml:space="preserve">
+    <value>Olemassa olevien käyttäjien vahvistaminen?</value>
+  </data>
+  <data name="AlwaysRemember.HelpText" xml:space="preserve">
+    <value>Tämän vaihtoehdon ottaminen käyttöön asettaa pysyvän evästeen yhdessä evästeen voimassaoloajan kanssa, mikä kirjaa käyttäjät automaattisesti sisään, kun he seuraavan kerran vierailevat sivustolla. Oletusarvoisesti sivusto käyttää istuntoevästejä.</value>
+  </data>
+  <data name="AlwaysRemember.Text" xml:space="preserve">
+    <value>Muistatko aina käyttäjän?</value>
+  </data>
+  <data name="CookieExpiration.HelpText" xml:space="preserve">
+    <value>Voit valita mukautetun todennusevästeen voimassaoloajan kullekin sivustolle (esim. \</value>
+  </data>
+  <data name="CookieExpiration.Text" xml:space="preserve">
+    <value>Evästeen voimassaoloaika:</value>
+  </data>
+  <data name="ReviewClaims.Text" xml:space="preserve">
+    <value>Tarkista väitteet?</value>
+  </data>
+  <data name="ReviewClaims.HelpText" xml:space="preserve">
+    <value>Tämä vaihtoehto tallentaa täydellisen luettelon palveluntarjoajan palauttamista vaatimuksista tapahtumalokiin. Sitä tulisi käyttää vain testaustarkoituksiin. Ulkoista kirjautumista rajoitetaan, kun tämä vaihtoehto on käytössä.</value>
+  </data>
+  <data name="NameClaimType.HelpText" xml:space="preserve">
+    <value>Määritä valinnaisesti identiteetin tarjoajan toimittaman käyttäjän nimiväitteen tyyppinimi. Tyypillinen arvo on 'name'.</value>
+  </data>
+  <data name="NameClaimType.Text" xml:space="preserve">
+    <value>Nimi Vaatimus:</value>
+  </data>
+  <data name="Provider.HelpText" xml:space="preserve">
+    <value>Valitse ulkoisen kirjautumisen tarjoaja</value>
+  </data>
+  <data name="Provider.Text" xml:space="preserve">
+    <value>Palveluntarjoaja:</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="OAuth2" xml:space="preserve">
+    <value>OAuth 2.0</value>
+  </data>
+  <data name="OIDC" xml:space="preserve">
+    <value>OpenID Connect (OIDC)</value>
+  </data>
+  <data name="SaveTokens.Text" xml:space="preserve">
+    <value>Tallenna merkkejä?</value>
+  </data>
+  <data name="SaveTokens.HelpText" xml:space="preserve">
+    <value>Määritä, tallennetaanko pääsy- ja päivitystunnisteet onnistuneen kirjautumisen jälkeen. Oletusarvo on false todennusevästeen koon pienentämiseksi.</value>
+  </data>
+  <data name="Success.DeleteUser" xml:space="preserve">
+    <value>Käyttäjä poistettu onnistuneesti</value>
+  </data>
+  <data name="Error.DeleteUser" xml:space="preserve">
+    <value>Virhe käyttäjän poistamisessa</value>
+  </data>
+  <data name="LogoutEverywhere.Text" xml:space="preserve">
+    <value>Kirjaudu ulos kaikkialta?</value>
+  </data>
+  <data name="LogoutEverywhere.HelpText" xml:space="preserve">
+    <value>Haluatko, että käyttäjät kirjautuvat ulos jokaisesta aktiivisesta istunnosta millä tahansa laitteella vai vain nykyisestä istunnosta?</value>
+  </data>
+  <data name="AllowHostRole.Text" xml:space="preserve">
+    <value>Salli isännän rooli?</value>
+  </data>
+  <data name="AllowHostRole.HelpText" xml:space="preserve">
+    <value>Ilmoita, tuetaanko identiteetin tarjoajan isäntärooleja. Ole varovainen tämän vaihtoehdon kanssa, sillä se antaa isäntäkäyttäjälle mahdollisuuden hallinnoida jokaista sivustoa asennuksessasi.</value>
+  </data>
+</root>

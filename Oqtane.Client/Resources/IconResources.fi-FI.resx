@@ -1,0 +1,789 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Icon.AccountLogin" xml:space="preserve">
+    <value>Tilin kirjautuminen</value>
+  </data>
+  <data name="Icon.AccountLogout" xml:space="preserve">
+    <value>Tilin uloskirjautuminen</value>
+  </data>
+  <data name="Icon.ActionRedo" xml:space="preserve">
+    <value>Toiminta Redo</value>
+  </data>
+  <data name="Icon.ActionUndo" xml:space="preserve">
+    <value>Toiminta Kumoa</value>
+  </data>
+  <data name="Icon.AlignCenter" xml:space="preserve">
+    <value>Kohdista keskus</value>
+  </data>
+  <data name="Icon.AlignLeft" xml:space="preserve">
+    <value>Kohdista vasemmalle</value>
+  </data>
+  <data name="Icon.AlignRight" xml:space="preserve">
+    <value>Kohdista oikealle</value>
+  </data>
+  <data name="Icon.Aperture" xml:space="preserve">
+    <value>Aukko</value>
+  </data>
+  <data name="Icon.ArrowBottom" xml:space="preserve">
+    <value>Nuoli pohjaan</value>
+  </data>
+  <data name="Icon.ArrowCircleBottom" xml:space="preserve">
+    <value>Nuoli ympyrä pohja</value>
+  </data>
+  <data name="Icon.ArrowCircleLeft" xml:space="preserve">
+    <value>Nuoli ympyrä vasemmalle</value>
+  </data>
+  <data name="Icon.ArrowCircleRight" xml:space="preserve">
+    <value>Nuoli ympyrä oikealle</value>
+  </data>
+  <data name="Icon.ArrowCircleTop" xml:space="preserve">
+    <value>Nuoli Circle Top</value>
+  </data>
+  <data name="Icon.ArrowLeft" xml:space="preserve">
+    <value>Nuoli vasemmalle</value>
+  </data>
+  <data name="Icon.ArrowRight" xml:space="preserve">
+    <value>Nuoli oikealle</value>
+  </data>
+  <data name="Icon.ArrowThickBottom" xml:space="preserve">
+    <value>Nuoli Paksu pohja</value>
+  </data>
+  <data name="Icon.ArrowThickLeft" xml:space="preserve">
+    <value>Nuoli Paksu vasen</value>
+  </data>
+  <data name="Icon.ArrowThickRight" xml:space="preserve">
+    <value>Nuoli Paksu Oikea</value>
+  </data>
+  <data name="Icon.ArrowThickTop" xml:space="preserve">
+    <value>Nuoli Paksu yläosa</value>
+  </data>
+  <data name="Icon.ArrowTop" xml:space="preserve">
+    <value>Nuoli Top</value>
+  </data>
+  <data name="Icon.AudioSpectrum" xml:space="preserve">
+    <value>Äänispektri</value>
+  </data>
+  <data name="Icon.Audio" xml:space="preserve">
+    <value>Audio</value>
+  </data>
+  <data name="Icon.Badge" xml:space="preserve">
+    <value>Merkki</value>
+  </data>
+  <data name="Icon.Ban" xml:space="preserve">
+    <value>Ban</value>
+  </data>
+  <data name="Icon.BarChart" xml:space="preserve">
+    <value>Pylväsdiagrammi</value>
+  </data>
+  <data name="Icon.Basket" xml:space="preserve">
+    <value>Kori</value>
+  </data>
+  <data name="Icon.BatteryEmpty" xml:space="preserve">
+    <value>Akku tyhjä</value>
+  </data>
+  <data name="Icon.BatteryFull" xml:space="preserve">
+    <value>Akku täynnä</value>
+  </data>
+  <data name="Icon.Beaker" xml:space="preserve">
+    <value>Juomalasi</value>
+  </data>
+  <data name="Icon.Bell" xml:space="preserve">
+    <value>Bell</value>
+  </data>
+  <data name="Icon.Bluetooth" xml:space="preserve">
+    <value>Bluetooth</value>
+  </data>
+  <data name="Icon.Bold" xml:space="preserve">
+    <value>Rohkea</value>
+  </data>
+  <data name="Icon.Bolt" xml:space="preserve">
+    <value>Pultti</value>
+  </data>
+  <data name="Icon.Book" xml:space="preserve">
+    <value>Kirja</value>
+  </data>
+  <data name="Icon.Bookmark" xml:space="preserve">
+    <value>Kirjanmerkki</value>
+  </data>
+  <data name="Icon.Box" xml:space="preserve">
+    <value>Laatikko</value>
+  </data>
+  <data name="Icon.Briefcase" xml:space="preserve">
+    <value>Salkku</value>
+  </data>
+  <data name="Icon.BritishPound" xml:space="preserve">
+    <value>Englannin punta</value>
+  </data>
+  <data name="Icon.Browser" xml:space="preserve">
+    <value>Selain</value>
+  </data>
+  <data name="Icon.Brush" xml:space="preserve">
+    <value>Harja</value>
+  </data>
+  <data name="Icon.Bug" xml:space="preserve">
+    <value>Vika</value>
+  </data>
+  <data name="Icon.Bullhorn" xml:space="preserve">
+    <value>Bullhorn</value>
+  </data>
+  <data name="Icon.Calculator" xml:space="preserve">
+    <value>Laskin</value>
+  </data>
+  <data name="Icon.Calendar" xml:space="preserve">
+    <value>Kalenteri</value>
+  </data>
+  <data name="Icon.CameraSlr" xml:space="preserve">
+    <value>Kamera Slr</value>
+  </data>
+  <data name="Icon.CaretBottom" xml:space="preserve">
+    <value>Caret Bottom</value>
+  </data>
+  <data name="Icon.CaretLeft" xml:space="preserve">
+    <value>Caret vasen</value>
+  </data>
+  <data name="Icon.CaretRight" xml:space="preserve">
+    <value>Caret Right</value>
+  </data>
+  <data name="Icon.CaretTop" xml:space="preserve">
+    <value>Caret Top</value>
+  </data>
+  <data name="Icon.Cart" xml:space="preserve">
+    <value>Ostoskori</value>
+  </data>
+  <data name="Icon.Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="Icon.Check" xml:space="preserve">
+    <value>Tarkista</value>
+  </data>
+  <data name="Icon.ChevronBottom" xml:space="preserve">
+    <value>Chevron pohja</value>
+  </data>
+  <data name="Icon.ChevronLeft" xml:space="preserve">
+    <value>Chevron vasen</value>
+  </data>
+  <data name="Icon.ChevronRight" xml:space="preserve">
+    <value>Chevron Oikea</value>
+  </data>
+  <data name="Icon.ChevronTop" xml:space="preserve">
+    <value>Chevron Top</value>
+  </data>
+  <data name="Icon.CircleCheck" xml:space="preserve">
+    <value>Circle Check</value>
+  </data>
+  <data name="Icon.CircleX" xml:space="preserve">
+    <value>Ympyrä X</value>
+  </data>
+  <data name="Icon.Clipboard" xml:space="preserve">
+    <value>Leikepöytä</value>
+  </data>
+  <data name="Icon.Clock" xml:space="preserve">
+    <value>Kello</value>
+  </data>
+  <data name="Icon.CloudDownload" xml:space="preserve">
+    <value>Lataa pilvi</value>
+  </data>
+  <data name="Icon.CloudUpload" xml:space="preserve">
+    <value>Cloud Upload</value>
+  </data>
+  <data name="Icon.Cloud" xml:space="preserve">
+    <value>Cloud</value>
+  </data>
+  <data name="Icon.Cloudy" xml:space="preserve">
+    <value>Pilvinen</value>
+  </data>
+  <data name="Icon.Code" xml:space="preserve">
+    <value>Koodi</value>
+  </data>
+  <data name="Icon.Cog" xml:space="preserve">
+    <value>Hammasratas</value>
+  </data>
+  <data name="Icon.CollapseDown" xml:space="preserve">
+    <value>Romahdus alas</value>
+  </data>
+  <data name="Icon.CollapseLeft" xml:space="preserve">
+    <value>Romahdus Vasen</value>
+  </data>
+  <data name="Icon.CollapseRight" xml:space="preserve">
+    <value>Romahtaa oikealle</value>
+  </data>
+  <data name="Icon.CollapseUp" xml:space="preserve">
+    <value>Romahdus ylös</value>
+  </data>
+  <data name="Icon.Command" xml:space="preserve">
+    <value>Komento</value>
+  </data>
+  <data name="Icon.CommentSquare" xml:space="preserve">
+    <value>Kommentti Square</value>
+  </data>
+  <data name="Icon.Compass" xml:space="preserve">
+    <value>Kompassi</value>
+  </data>
+  <data name="Icon.Contrast" xml:space="preserve">
+    <value>Kontrasti</value>
+  </data>
+  <data name="Icon.Copywriting" xml:space="preserve">
+    <value>Copywriting</value>
+  </data>
+  <data name="Icon.CreditCard" xml:space="preserve">
+    <value>Luottokortti</value>
+  </data>
+  <data name="Icon.Crop" xml:space="preserve">
+    <value>Sato</value>
+  </data>
+  <data name="Icon.Dashboard" xml:space="preserve">
+    <value>Kojelauta</value>
+  </data>
+  <data name="Icon.DataTransferDownload" xml:space="preserve">
+    <value>Tiedonsiirto Lataa</value>
+  </data>
+  <data name="Icon.DataTransferUpload" xml:space="preserve">
+    <value>Tiedonsiirto Upload</value>
+  </data>
+  <data name="Icon.Delete" xml:space="preserve">
+    <value>Poista</value>
+  </data>
+  <data name="Icon.Dial" xml:space="preserve">
+    <value>Soita</value>
+  </data>
+  <data name="Icon.Document" xml:space="preserve">
+    <value>Asiakirja</value>
+  </data>
+  <data name="Icon.Dollar" xml:space="preserve">
+    <value>Dollar</value>
+  </data>
+  <data name="Icon.DoubleQuoteSansLeft" xml:space="preserve">
+    <value>Double Quote Sans Vasen</value>
+  </data>
+  <data name="Icon.DoubleQuoteSansRight" xml:space="preserve">
+    <value>Double Quote Sans Oikea</value>
+  </data>
+  <data name="Icon.DoubleQuoteSerifLeft" xml:space="preserve">
+    <value>Double Quote Serif Vasen</value>
+  </data>
+  <data name="Icon.DoubleQuoteSerifRight" xml:space="preserve">
+    <value>Double Quote Serif Oikea</value>
+  </data>
+  <data name="Icon.Droplet" xml:space="preserve">
+    <value>Pisara</value>
+  </data>
+  <data name="Icon.Eject" xml:space="preserve">
+    <value>Eject</value>
+  </data>
+  <data name="Icon.Elevator" xml:space="preserve">
+    <value>Hissi</value>
+  </data>
+  <data name="Icon.Ellipses" xml:space="preserve">
+    <value>Ellipsit</value>
+  </data>
+  <data name="Icon.EnvelopeClosed" xml:space="preserve">
+    <value>Kirjekuori suljettu</value>
+  </data>
+  <data name="Icon.EnvelopeOpen" xml:space="preserve">
+    <value>Kirjekuori auki</value>
+  </data>
+  <data name="Icon.Euro" xml:space="preserve">
+    <value>Euro</value>
+  </data>
+  <data name="Icon.Excerpt" xml:space="preserve">
+    <value>Ote</value>
+  </data>
+  <data name="Icon.ExpandDown" xml:space="preserve">
+    <value>Laajenna alaspäin</value>
+  </data>
+  <data name="Icon.ExpandLeft" xml:space="preserve">
+    <value>Laajenna vasemmalle</value>
+  </data>
+  <data name="Icon.ExpandRight" xml:space="preserve">
+    <value>Laajenna oikealle</value>
+  </data>
+  <data name="Icon.ExpandUp" xml:space="preserve">
+    <value>Laajenna ylöspäin</value>
+  </data>
+  <data name="Icon.ExternalLink" xml:space="preserve">
+    <value>Ulkoinen linkki</value>
+  </data>
+  <data name="Icon.Eye" xml:space="preserve">
+    <value>Silmä</value>
+  </data>
+  <data name="Icon.Eyedropper" xml:space="preserve">
+    <value>Silmätippa</value>
+  </data>
+  <data name="Icon.File" xml:space="preserve">
+    <value>Tiedosto</value>
+  </data>
+  <data name="Icon.Fire" xml:space="preserve">
+    <value>Palo</value>
+  </data>
+  <data name="Icon.Flag" xml:space="preserve">
+    <value>Lippu</value>
+  </data>
+  <data name="Icon.Flash" xml:space="preserve">
+    <value>Flash</value>
+  </data>
+  <data name="Icon.Folder" xml:space="preserve">
+    <value>Kansio</value>
+  </data>
+  <data name="Icon.Fork" xml:space="preserve">
+    <value>Haarukka</value>
+  </data>
+  <data name="Icon.FullscreenEnter" xml:space="preserve">
+    <value>Täydellinen näyttö Enter</value>
+  </data>
+  <data name="Icon.FullscreenExit" xml:space="preserve">
+    <value>Koko näytön poistuminen</value>
+  </data>
+  <data name="Icon.Globe" xml:space="preserve">
+    <value>Globe</value>
+  </data>
+  <data name="Icon.Graph" xml:space="preserve">
+    <value>Kaavio</value>
+  </data>
+  <data name="Icon.GridFourUp" xml:space="preserve">
+    <value>Ruutu neljä ylöspäin</value>
+  </data>
+  <data name="Icon.GridThreeUp" xml:space="preserve">
+    <value>Ruutu kolme ylöspäin</value>
+  </data>
+  <data name="Icon.GridTwoUp" xml:space="preserve">
+    <value>Ruutu kaksi ylöspäin</value>
+  </data>
+  <data name="Icon.HardDrive" xml:space="preserve">
+    <value>Kiintolevy</value>
+  </data>
+  <data name="Icon.Header" xml:space="preserve">
+    <value>Otsikko</value>
+  </data>
+  <data name="Icon.Headphones" xml:space="preserve">
+    <value>Kuulokkeet</value>
+  </data>
+  <data name="Icon.Heart" xml:space="preserve">
+    <value>Sydän</value>
+  </data>
+  <data name="Icon.Home" xml:space="preserve">
+    <value>Etusivu</value>
+  </data>
+  <data name="Icon.Image" xml:space="preserve">
+    <value>Kuva</value>
+  </data>
+  <data name="Icon.Inbox" xml:space="preserve">
+    <value>Saapuneet tiedot</value>
+  </data>
+  <data name="Icon.Infinity" xml:space="preserve">
+    <value>Infinity</value>
+  </data>
+  <data name="Icon.Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="Icon.Italic" xml:space="preserve">
+    <value>Kursivoitu</value>
+  </data>
+  <data name="Icon.JustifyCenter" xml:space="preserve">
+    <value>Oikeuttaa keskus</value>
+  </data>
+  <data name="Icon.JustifyLeft" xml:space="preserve">
+    <value>Perustele vasen</value>
+  </data>
+  <data name="Icon.JustifyRight" xml:space="preserve">
+    <value>Oikeuttaa oikeus</value>
+  </data>
+  <data name="Icon.Key" xml:space="preserve">
+    <value>Avain</value>
+  </data>
+  <data name="Icon.Laptop" xml:space="preserve">
+    <value>Kannettava tietokone</value>
+  </data>
+  <data name="Icon.Layers" xml:space="preserve">
+    <value>Kerrokset</value>
+  </data>
+  <data name="Icon.Lightbulb" xml:space="preserve">
+    <value>Lamppu</value>
+  </data>
+  <data name="Icon.LinkBroken" xml:space="preserve">
+    <value>Linkki rikki</value>
+  </data>
+  <data name="Icon.LinkIntact" xml:space="preserve">
+    <value>Linkki ehjä</value>
+  </data>
+  <data name="Icon.ListRich" xml:space="preserve">
+    <value>Luettelo Rich</value>
+  </data>
+  <data name="Icon.List" xml:space="preserve">
+    <value>Luettelo</value>
+  </data>
+  <data name="Icon.Location" xml:space="preserve">
+    <value>Sijainti</value>
+  </data>
+  <data name="Icon.LockLocked" xml:space="preserve">
+    <value>Lukitus Lukittu</value>
+  </data>
+  <data name="Icon.LockUnlocked" xml:space="preserve">
+    <value>Lukitus auki</value>
+  </data>
+  <data name="Icon.LoopCircular" xml:space="preserve">
+    <value>Silmukka ympyränmuotoinen</value>
+  </data>
+  <data name="Icon.LoopSquare" xml:space="preserve">
+    <value>Loop Square</value>
+  </data>
+  <data name="Icon.Loop" xml:space="preserve">
+    <value>Silmukka</value>
+  </data>
+  <data name="Icon.MagnifyingGlass" xml:space="preserve">
+    <value>Suurennuslasi</value>
+  </data>
+  <data name="Icon.MapMarker" xml:space="preserve">
+    <value>Karttamerkki</value>
+  </data>
+  <data name="Icon.Map" xml:space="preserve">
+    <value>Kartta</value>
+  </data>
+  <data name="Icon.MediaPause" xml:space="preserve">
+    <value>Media Pause</value>
+  </data>
+  <data name="Icon.MediaPlay" xml:space="preserve">
+    <value>Media Play</value>
+  </data>
+  <data name="Icon.MediaRecord" xml:space="preserve">
+    <value>Media Record</value>
+  </data>
+  <data name="Icon.MediaSkipBackward" xml:space="preserve">
+    <value>Media hyppää taaksepäin</value>
+  </data>
+  <data name="Icon.MediaSkipForward" xml:space="preserve">
+    <value>Media Hyppää eteenpäin</value>
+  </data>
+  <data name="Icon.MediaStepBackward" xml:space="preserve">
+    <value>Media askel taaksepäin</value>
+  </data>
+  <data name="Icon.MediaStepForward" xml:space="preserve">
+    <value>Media Step Forward</value>
+  </data>
+  <data name="Icon.MediaStop" xml:space="preserve">
+    <value>Media Stop</value>
+  </data>
+  <data name="Icon.MedicalCross" xml:space="preserve">
+    <value>Lääketieteellinen risti</value>
+  </data>
+  <data name="Icon.Menu" xml:space="preserve">
+    <value>Valikko</value>
+  </data>
+  <data name="Icon.Microphone" xml:space="preserve">
+    <value>Mikrofoni</value>
+  </data>
+  <data name="Icon.Minus" xml:space="preserve">
+    <value>Miinus</value>
+  </data>
+  <data name="Icon.Monitor" xml:space="preserve">
+    <value>Näyttö</value>
+  </data>
+  <data name="Icon.Moon" xml:space="preserve">
+    <value>Kuu</value>
+  </data>
+  <data name="Icon.Move" xml:space="preserve">
+    <value>Siirrä</value>
+  </data>
+  <data name="Icon.MusicalNote" xml:space="preserve">
+    <value>Nuotti</value>
+  </data>
+  <data name="Icon.Paperclip" xml:space="preserve">
+    <value>Paperiliitin</value>
+  </data>
+  <data name="Icon.Pencil" xml:space="preserve">
+    <value>Kynä</value>
+  </data>
+  <data name="Icon.People" xml:space="preserve">
+    <value>Ihmiset</value>
+  </data>
+  <data name="Icon.Person" xml:space="preserve">
+    <value>Henkilö</value>
+  </data>
+  <data name="Icon.Phone" xml:space="preserve">
+    <value>Puhelin</value>
+  </data>
+  <data name="Icon.PieChart" xml:space="preserve">
+    <value>Piirakkakaavio</value>
+  </data>
+  <data name="Icon.Pin" xml:space="preserve">
+    <value>Pin</value>
+  </data>
+  <data name="Icon.PlayCircle" xml:space="preserve">
+    <value>Leikkikehä</value>
+  </data>
+  <data name="Icon.Plus" xml:space="preserve">
+    <value>Plus</value>
+  </data>
+  <data name="Icon.PowerStandby" xml:space="preserve">
+    <value>Virran valmiustila</value>
+  </data>
+  <data name="Icon.Print" xml:space="preserve">
+    <value>Tulosta</value>
+  </data>
+  <data name="Icon.Project" xml:space="preserve">
+    <value>Hanke</value>
+  </data>
+  <data name="Icon.Pulse" xml:space="preserve">
+    <value>Pulssi</value>
+  </data>
+  <data name="Icon.PuzzlePiece" xml:space="preserve">
+    <value>Palapelin pala</value>
+  </data>
+  <data name="Icon.QuestionMark" xml:space="preserve">
+    <value>Kysymysmerkki</value>
+  </data>
+  <data name="Icon.Rain" xml:space="preserve">
+    <value>Sade</value>
+  </data>
+  <data name="Icon.Random" xml:space="preserve">
+    <value>Satunnainen</value>
+  </data>
+  <data name="Icon.Reload" xml:space="preserve">
+    <value>Lataa uudelleen</value>
+  </data>
+  <data name="Icon.ResizeBoth" xml:space="preserve">
+    <value>Koon muuttaminen Molemmat</value>
+  </data>
+  <data name="Icon.ResizeHeight" xml:space="preserve">
+    <value>Koon muuttaminen Korkeus</value>
+  </data>
+  <data name="Icon.ResizeWidth" xml:space="preserve">
+    <value>Koon muuttaminen Leveys</value>
+  </data>
+  <data name="Icon.RssAlt" xml:space="preserve">
+    <value>Rss Alt</value>
+  </data>
+  <data name="Icon.Rss" xml:space="preserve">
+    <value>Rss</value>
+  </data>
+  <data name="Icon.Script" xml:space="preserve">
+    <value>Käsikirjoitus</value>
+  </data>
+  <data name="Icon.ShareBoxed" xml:space="preserve">
+    <value>Jaa Boxed</value>
+  </data>
+  <data name="Icon.Share" xml:space="preserve">
+    <value>Jaa</value>
+  </data>
+  <data name="Icon.Shield" xml:space="preserve">
+    <value>Kilpi</value>
+  </data>
+  <data name="Icon.Signal" xml:space="preserve">
+    <value>Signaali</value>
+  </data>
+  <data name="Icon.Signpost" xml:space="preserve">
+    <value>Opasteet</value>
+  </data>
+  <data name="Icon.SortAscending" xml:space="preserve">
+    <value>Lajittelu nouseva</value>
+  </data>
+  <data name="Icon.SortDescending" xml:space="preserve">
+    <value>Lajittelu laskeva</value>
+  </data>
+  <data name="Icon.Spreadsheet" xml:space="preserve">
+    <value>Taulukkolaskenta</value>
+  </data>
+  <data name="Icon.Star" xml:space="preserve">
+    <value>Tähti</value>
+  </data>
+  <data name="Icon.Sun" xml:space="preserve">
+    <value>Sun</value>
+  </data>
+  <data name="Icon.Tablet" xml:space="preserve">
+    <value>Tabletti</value>
+  </data>
+  <data name="Icon.Tag" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="Icon.Tags" xml:space="preserve">
+    <value>Tunnisteet</value>
+  </data>
+  <data name="Icon.Target" xml:space="preserve">
+    <value>Kohde</value>
+  </data>
+  <data name="Icon.Task" xml:space="preserve">
+    <value>Tehtävä</value>
+  </data>
+  <data name="Icon.Terminal" xml:space="preserve">
+    <value>Terminaali</value>
+  </data>
+  <data name="Icon.Text" xml:space="preserve">
+    <value>Teksti</value>
+  </data>
+  <data name="Icon.ThumbDown" xml:space="preserve">
+    <value>Peukalo alas</value>
+  </data>
+  <data name="Icon.ThumbUp" xml:space="preserve">
+    <value>Peukalo ylös</value>
+  </data>
+  <data name="Icon.Timer" xml:space="preserve">
+    <value>Ajastin</value>
+  </data>
+  <data name="Icon.Transfer" xml:space="preserve">
+    <value>Siirto</value>
+  </data>
+  <data name="Icon.Trash" xml:space="preserve">
+    <value>Roskat</value>
+  </data>
+  <data name="Icon.Underline" xml:space="preserve">
+    <value>Alleviivaa</value>
+  </data>
+  <data name="Icon.VerticalAlignBottom" xml:space="preserve">
+    <value>Pystysuora kohdistus pohjaan</value>
+  </data>
+  <data name="Icon.VerticalAlignCenter" xml:space="preserve">
+    <value>Pystysuora kohdistus keskelle</value>
+  </data>
+  <data name="Icon.VerticalAlignTop" xml:space="preserve">
+    <value>Pystysuora kohdistus Yläosa</value>
+  </data>
+  <data name="Icon.Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="Icon.VolumeHigh" xml:space="preserve">
+    <value>Äänenvoimakkuus Korkea</value>
+  </data>
+  <data name="Icon.VolumeLow" xml:space="preserve">
+    <value>Äänenvoimakkuus alhainen</value>
+  </data>
+  <data name="Icon.VolumeOff" xml:space="preserve">
+    <value>Äänenvoimakkuus pois päältä</value>
+  </data>
+  <data name="Icon.Warning" xml:space="preserve">
+    <value>Varoitus</value>
+  </data>
+  <data name="Icon.Wifi" xml:space="preserve">
+    <value>Wifi</value>
+  </data>
+  <data name="Icon.Wrench" xml:space="preserve">
+    <value>Avainavain</value>
+  </data>
+  <data name="Icon.X" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="Icon.Yen" xml:space="preserve">
+    <value>Yen</value>
+  </data>
+  <data name="Icon.ZoomIn" xml:space="preserve">
+    <value>Suurenna</value>
+  </data>
+  <data name="Icon.ZoomOut" xml:space="preserve">
+    <value>Pienennä</value>
+  </data>
+</root>

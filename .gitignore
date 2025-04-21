@@ -37,4 +37,4 @@ Oqtane.Server/wwwroot/Themes/*
 Oqtane.Server/wwwroot/Themes/Templates/*
 Oqtane.Server/wwwroot/Themes/Templates/External
 /Oqtane.Server/.config
-/Oqtane.Server/Properties/PublishProfiles/FTPProfile.pubxml
+/Oqtane.Server/Properties/PublishProfiles/*

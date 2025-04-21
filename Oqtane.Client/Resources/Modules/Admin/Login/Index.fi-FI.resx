@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Unohditko salasanan</value>
+  </data>
+  <data name="Success.Account.Verified" xml:space="preserve">
+    <value>Käyttäjätili vahvistettu onnistuneesti. Voit nyt kirjautua sisään alla olevalla käyttäjätunnuksella ja salasanalla.</value>
+  </data>
+  <data name="Message.Account.NotVerified" xml:space="preserve">
+    <value>Käyttäjätiliä ei voitu vahvistaa. Ota yhteyttä järjestelmänvalvojaan saadaksesi lisäohjeita.</value>
+  </data>
+  <data name="Success.Account.Linked" xml:space="preserve">
+    <value>Käyttäjätili yhdistetty onnistuneesti. Voit nyt kirjautua sisään alla olevalla ulkoisella tunnuksellasi.</value>
+  </data>
+  <data name="Message.Account.NotLinked" xml:space="preserve">
+    <value>Ulkoista kirjautumista ei voitu yhdistää. Ota yhteyttä järjestelmänvalvojaan saadaksesi lisäohjeita.</value>
+  </data>
+  <data name="Error.Login.Fail" xml:space="preserve">
+    <value>Kirjautuminen epäonnistui. Muistathan, että salasanat ovat suuraakkoset huomioivia. Jos olet yrittänyt kirjautua sisään useita kertoja tuloksetta, tilisi lukitaan pois käytöstä joksikin aikaa. Huomaa, että käyttäjätilit vaativat vahvistuksen, kun ne luodaan ensimmäistä kertaa, joten voit tarkistaa sähköpostisi, jos olet uusi käyttäjä.</value>
+  </data>
+  <data name="Message.Required.UserInfo" xml:space="preserve">
+    <value>Täytä kaikki vaaditut kentät</value>
+  </data>
+  <data name="Info.SignedIn" xml:space="preserve">
+    <value>Olet jo kirjautunut sisään</value>
+  </data>
+  <data name="Message.ForgotPassword" xml:space="preserve">
+    <value>Kirjoita käyttäjätunnus, joka liittyy tiliisi, ja valitse sitten Unohdin salasanan -vaihtoehto uudelleen.</value>
+  </data>
+  <data name="Message.ForgotUser" xml:space="preserve">
+    <value>Tarkista käyttäjätiliisi liitetty sähköpostiosoite salasanan palautusilmoitusta varten.</value>
+  </data>
+  <data name="Message.UserDoesNotExist" xml:space="preserve">
+    <value>Käyttäjää ei ole olemassa</value>
+  </data>
+  <data name="Code.HelpText" xml:space="preserve">
+    <value>Syötä suojattu vahvistuskoodi, joka lähetettiin sinulle sähköpostitse.</value>
+  </data>
+  <data name="Code.Placeholder" xml:space="preserve">
+    <value>Tarkistuskoodi</value>
+  </data>
+  <data name="Code.Text" xml:space="preserve">
+    <value>Tarkistuskoodi:</value>
+  </data>
+  <data name="Error.TwoFactor.Fail" xml:space="preserve">
+    <value>Vahvistus epäonnistui. Varmista, että olet syöttänyt koodin täsmälleen sähköpostissa annettuun lomakkeeseen. Jos haluat pyytää uuden vahvistuskoodin, valitse Peruuta-vaihtoehto ja kirjaudu uudelleen.</value>
+  </data>
+  <data name="Message.TwoFactor" xml:space="preserve">
+    <value>Turvallinen vahvistuskoodi on lähetetty sähköpostiosoitteeseesi. Syötä saamasi koodi. Jos et saa koodia tai olet menettänyt pääsyn sähköpostiisi, ota yhteyttä ylläpitäjääsi.</value>
+  </data>
+  <data name="Password.HelpText" xml:space="preserve">
+    <value>Syötä tiliisi liittyvä salasana. Muista, että salasanat ovat suuraakkoset huomioivia. Jos yrität kirjautua tilillesi useita kertoja epäonnistuneesti, sinut lukitaan ulos tililtäsi joksikin aikaa.</value>
+  </data>
+  <data name="Password.Placeholder" xml:space="preserve">
+    <value>Salasana</value>
+  </data>
+  <data name="Password.Text" xml:space="preserve">
+    <value>Salasana:</value>
+  </data>
+  <data name="Remember.HelpText" xml:space="preserve">
+    <value>Määritä, haluatko, että sinut rekisteröidään takaisin automaattisesti, kun vierailet tällä sivustolla seuraavan kerran.</value>
+  </data>
+  <data name="Remember.Text" xml:space="preserve">
+    <value>Muistatko minut?</value>
+  </data>
+  <data name="Username.HelpText" xml:space="preserve">
+    <value>Kirjoita käyttäjätunnus, joka liittyy tiliisi</value>
+  </data>
+  <data name="Username.Placeholder" xml:space="preserve">
+    <value>Käyttäjätunnus</value>
+  </data>
+  <data name="Username.Text" xml:space="preserve">
+    <value>Käyttäjätunnus:</value>
+  </data>
+  <data name="Use" xml:space="preserve">
+    <value>Käytä</value>
+  </data>
+  <data name="Error.LoadLogin" xml:space="preserve">
+    <value>Virhe kirjautumisen lataamisessa</value>
+  </data>
+  <data name="Error.Login" xml:space="preserve">
+    <value>Virhe kirjautumisessa</value>
+  </data>
+  <data name="Error.ResetPassword" xml:space="preserve">
+    <value>Virhe salasanan palauttamisessa</value>
+  </data>
+  <data name="ExternalLoginStatus.DuplicateEmail" xml:space="preserve">
+    <value>Ulkoisen kirjautumisen sähköpostiosoitteella on jo useita käyttäjätunnuksia. Ota yhteyttä järjestelmänvalvojaan saadaksesi lisäohjeita.</value>
+  </data>
+  <data name="ExternalLoginStatus.MissingClaims" xml:space="preserve">
+    <value>Ulkoisen kirjautumisen tarjoaja ei antanut kaikkia vaadittuja tietoja. Ota yhteyttä järjestelmänvalvojaan lisäohjeiden saamiseksi.</value>
+  </data>
+  <data name="ExternalLoginStatus.ProviderKeyMismatch" xml:space="preserve">
+    <value>Ulkoisen sisäänkirjautumisen tarkistamisessa tapahtui virhe. Ota yhteyttä järjestelmänvalvojaan saadaksesi lisäohjeita.</value>
+  </data>
+  <data name="ExternalLoginStatus.UserDoesNotExist" xml:space="preserve">
+    <value>Ulkoisen kirjautumisen sähköpostiosoitetta vastaavaa käyttäjätiliä ei ole olemassa. Ota yhteyttä järjestelmänvalvojaan saadaksesi lisäohjeita.</value>
+  </data>
+  <data name="ExternalLoginStatus.UserNotCreated" xml:space="preserve">
+    <value>Käyttäjätiliä ei voitu luoda ulkoista kirjautumistasi varten. Ota yhteyttä järjestelmänvalvojaan saadaksesi lisäohjeita.</value>
+  </data>
+  <data name="ExternalLoginStatus.VerificationRequired" xml:space="preserve">
+    <value>Jotta voit yhdistää ulkoisen kirjautumisen käyttäjätiliisi, sinun on vahvistettava henkilöllisyytesi. Tarkista sähköpostiisi saadaksesi lisäohjeita.</value>
+  </data>
+  <data name="ExternalLoginStatus.AccessDenied" xml:space="preserve">
+    <value>Ulkoinen kirjautumisesi evättiin. Ota yhteyttä järjestelmänvalvojaan saadaksesi lisäohjeita.</value>
+  </data>
+  <data name="ExternalLoginStatus.RemoteFailure" xml:space="preserve">
+    <value>Ulkoinen kirjautuminen epäonnistui. Ota yhteyttä järjestelmänvalvojaan saadaksesi lisäohjeita.</value>
+  </data>
+  <data name="ExternalLoginStatus.ReviewClaims" xml:space="preserve">
+    <value>Review Claims -vaihtoehto oli käytössä ulkoisen kirjautumisen asetuksissa. Käy tapahtumalokissa katsomassa palveluntarjoajan palauttamat vaatimukset.</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Rekisteröidy uudeksi käyttäjäksi?</value>
+  </data>
+</root>

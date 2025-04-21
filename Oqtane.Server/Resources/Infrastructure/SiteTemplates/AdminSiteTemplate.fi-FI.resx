@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Privacy" xml:space="preserve">
+    <value>&lt;p&gt;Tämä tietosuojakäytäntö (”käytäntö”) auttaa sinua ymmärtämään, miten [PageState:Site:Name] (”me”, ”me”, ”meidän”) käyttää ja suojaa tietoja, jotka annat meille vieraillessasi ja käyttäessäsi tätä verkkosivustoa.&lt;/p&gt;
+
+&lt;p&gt;Varaamme oikeuden muuttaa tätä käytäntöä milloin tahansa. Jos haluat varmistaa, että olet ajan tasalla viimeisimmistä muutoksista, suosittelemme, että vierailet usein tällä sivulla.&lt;/p&gt;
+
+&lt;h2&gt;Mitä käyttäjätietoja keräämme&lt;/h2&gt;
+
+&lt;p&gt;Käyttäessäsi tätä verkkosivustoa saatamme kerätä seuraavia tietoja: IP-osoitteesi, yhteystietosi ja sähköpostiosoitteesi sekä muita tietoja, kuten kiinnostuksen kohteita ja mieltymyksiä.&lt;/p&gt;
+
+&lt;h2&gt;Miksi keräämme tietojasi&lt;/h2&gt;
+
+&lt;p&gt;Keräämme tietojasi useista syistä: ymmärtääksemme paremmin tarpeitasi, parantaaksemme tuotteitamme ja palveluitamme, lähettääksemme sinulle mainossähköposteja, jotka sisältävät tietoja, joiden uskomme kiinnostavan sinua, räätälöidäksemme verkkosivustoamme verkkokäyttäytymisesi ja henkilökohtaisten mieltymystesi mukaan.&lt;/p&gt;
+
+&lt;h2&gt;Tietojen suojaaminen ja turvaaminen&lt;/h2&gt;
+
+&lt;p&gt;[PageState:Site:Name] on sitoutunut turvaamaan tietosi ja pitämään ne luottamuksellisina. [PageState:Site:Name] on tehnyt kaikkensa estääkseen tietojen varastamisen, luvattoman käytön ja paljastamisen ottamalla käyttöön uusimmat teknologiat ja ohjelmistot, joiden avulla voimme suojata kaikki verkossa keräämämme tiedot.&lt;/p&gt;
+
+&lt;h2&gt;Esimerkkikäytäntömme&lt;/h2&gt;
+
+&lt;p&gt;Kun suostut siihen, että verkkosivustomme saa käyttää evästeitä, suostut myös siihen, että saamme käyttää sen keräämiä tietoja verkkokäyttäytymisestäsi (analysoida verkkoliikennettä, verkkosivuja, joilla vierailet ja vietät eniten aikaa jne...).&lt;/p&gt;
+
+&lt;p&gt;Evästeiden avulla keräämiämme tietoja käytetään verkkosivustomme mukauttamiseen tarpeisiisi.&lt;/p&gt;
+
+&lt;p&gt;Huomaa, että evästeiden avulla emme pääse millään tavalla käsiksi tietokoneeseesi. Niitä käytetään yksinomaan sen seuraamiseen, mitkä sivut ovat mielestäsi hyödyllisiä ja mitkä eivät, jotta voimme tarjota sinulle paremman käyttökokemuksen.&lt;/p&gt;
+
+&lt;p&gt;Jos haluat poistaa evästeet käytöstä tai poistaa ne, voit tehdä sen Internet-selaimesi asetuksista.&lt;/p&gt;Mikäli haluat poistaa evästeet käytöstä tai poistaa ne, voit tehdä sen Internet-selaimesi asetuksista.&lt;/p&gt;Kyllä.
+
+&lt;h2&gt;Linkit muille verkkosivustoille&lt;/h2&gt;
+
+&lt;p&gt;Sivustomme sisältää linkkejä, jotka johtavat muille verkkosivustoille. Jos napsautat näitä linkkejä, [PageState:Site:Name] ei ole vastuussa tietojesi ja yksityisyyden suojasta. Näillä verkkosivustoilla vierailu ei kuulu tämän tietosuojasopimuksen piiriin. Varmista, että luet kaikkien niiden verkkosivustojen tietosuojakäytäntöasiakirjat, joille navigoit verkkosivustoltamme.&lt;/p&gt;
+
+&lt;h2&gt;Henkilötietojesi keräämisen rajoittaminen&lt;/h2&gt;
+
+&lt;p&gt;Jossain vaiheessa saatat haluta rajoittaa henkilötietojesi käyttöä ja keräämistä. Jos olet aiemmin hyväksynyt tietojesi jakamisen kanssamme, ota rohkeasti yhteyttä meihin sähköpostitse, niin muutamme tämän mielellämme puolestasi.&lt;/p&gt;
+
+&lt;p&gt;[PageState:Site:Name] ei vuokraa, myy tai jaa henkilötietojasi kolmansille osapuolille, ellei meillä ole siihen lupaasi. Henkilötietojasi käytetään vain silloin, kun meidän on lähetettävä sinulle mainosmateriaalia, jos hyväksyt tämän tietosuojakäytännön.&lt;/p&gt;</value>
+  </data>
+  <data name="Terms" xml:space="preserve">
+    <value>&lt;p&gt;Lue nämä käyttöehdot huolellisesti ennen kuin käytät tätä [PageState:Site:Name] -sivustoa (""me", ""me"", ""meidän"").&lt;/p&gt;
+
+&lt;h2&gt;Käyttöehdot&lt;/h2&gt;
+
+&lt;p&gt;Käyttämällä tätä verkkosivustoa vahvistat, että olet lukenut ja lukenut tämän sopimuksen ja että sitoudut noudattamaan sen ehtoja. Jos et halua sitoutua tämän sopimuksen ehtoihin, sinua kehotetaan lopettamaan verkkosivuston käyttö vastaavasti. [PageState:Site:Name] myöntää tämän verkkosivuston, sen tuotteiden ja palveluiden käytön ja pääsyn vain niille, jotka ovat hyväksyneet sen ehdot.&lt;/p&gt;
+
+&lt;h2&gt;Tietosuojakäytäntö&lt;/h2&gt;
+
+&lt;p&gt;Ennen kuin jatkat verkkosivustomme käyttöä, suosittelemme lukemaan &lt;a href=""/privacy""&gt;tietosuojakäytäntömme&lt;/a&gt;, joka koskee käyttäjätietojen keräämistä. Se auttaa sinua ymmärtämään käytäntöjämme paremmin.&lt;/p&gt;
+
+&lt;h2&gt;Immateriaaliomaisuus&lt;/h2&gt;
+
+&lt;p&gt;Hyväksyt, että kaikki tällä verkkosivustolla tarjotut materiaalit, tuotteet ja palvelut ovat [PageState:Site:Name]:n, sen tytäryhtiöiden, johtajien, virkamiesten, työntekijöiden, agenttien, toimittajien tai lisenssinantajien omaisuutta, mukaan lukien kaikki tekijänoikeudet, liikesalaisuudet, tavaramerkit, patentit ja muut immateriaalioikeudet. Suostut myös olemaan jäljentämättä tai levittämättä [PageState:Site:Name]:n immateriaalioikeuksia millään tavalla, mukaan lukien sähköiset, digitaaliset tai uusien tavaramerkkien rekisteröinnit.&lt;/p&gt;
+
+&lt;p&gt;Annat [PageState:Site:Name]:lle rojaltivapaan ja ei-yksinomaisen lisenssin näyttää, käyttää, kopioida, lähettää ja lähettää lataamasi ja julkaisemasi sisällön. Immateriaalioikeuksia koskevissa kysymyksissä sinun tulee ottaa meihin yhteyttä päästäksemme sopimukseen.&lt;/p&gt;
+
+&lt;h2&gt;Käyttäjätilit&lt;/h2&gt;
+
+&lt;p&gt;Tämän verkkosivuston käyttäjänä sinua saatetaan pyytää rekisteröitymään meille ja antamaan henkilökohtaisia ​​tietoja. Olet vastuussa näiden tietojen oikeellisuuden varmistamisesta ja olet vastuussa tunnistamistietojesi turvallisuuden ylläpitämisestä.&lt;/p&gt;
+
+&lt;p&gt;Olet myös vastuussa kaikista toiminnoista, jotka tapahtuvat tililläsi tai salasanallasi. Jos uskot, että verkkosivustollasi on mahdollisia tilisi turvallisuuteen liittyviä ongelmia, ilmoita siitä meille välittömästi, jotta voimme korjata ne.&lt;/p&gt;
+
+&lt;p&gt;Pidämme kaikki oikeudet lopettaa tilejä, muokata tai poistaa sisältöä ja peruuttaa tilauksia oman harkintamme mukaan.&lt;/p&gt;
+
+&lt;h2&gt;Sovellettava laki&lt;/h2&gt;
+
+&lt;p&gt;Käyttämällä tätä verkkosivustoa hyväksyt, että sivustoon [PageState:Site:Name] liittyvän lainkäyttöalueen lait, ottamatta huomioon ristiriitalakien periaatteita, hallitsevat näitä ehtoja tai kaikenlaisia ​​kiistoja, jotka voivat syntyä [PageState:Site:Name] ja sinun tai sen liikekumppaneiden ja yhteistyökumppaneiden välillä.&lt;/p&gt;
+
+&lt;h2&gt;Kiistat&lt;/h2&gt;
+
+&lt;p&gt;Kaikki tämän verkkosivuston käyttöön tai meiltä ostamiisi tuotteisiin liittyvät kiistat ratkaistaan ​​tuomioistuimen välimiesmenettelyssä, ja hyväksyt tällaisten tuomioistuinten yksinomaisen toimivallan ja paikkakunnan.&lt;/p&gt;
+
+&lt;h2&gt;Korvaus&lt;/h2&gt;
+
+&lt;p&gt;Sitoudut korvaamaan [PageState:Site:Name] ja sen tytäryhtiöt ja pidättelet [PageState:Site:Name] oikeudellisista vaatimuksista ja vaatimuksista, joita voi syntyä palveluidemme käytöstä tai väärinkäytöstä. Pidätämme oikeuden valita oman lakimiehemme.&lt;/p&gt;
+
+&lt;h2&gt;Vastuurajoitus&lt;/h2&gt;
+
+&lt;p&gt;[PageState:Site:Name] ei ole vastuussa mistään vahingoista, joita sinulle saattaa aiheutua verkkosivustomme väärinkäytöstä. [PageState:Site:Name] pidättää oikeuden muokata, muokata ja muuttaa tätä sopimusta milloin tahansa. Ilmoitamme käyttäjillemme näistä muutoksista sähköpostitse. Tämä sopimus on [PageState:Site:Name] ja käyttäjän välinen sopimus, joka korvaa ja korvaa kaikki aiemmat tämän verkkosivuston käyttöä koskevat sopimukset.&lt;/p&gt;</value>
+  </data>
+</root>
