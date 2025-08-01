@@ -131,14 +131,16 @@ namespace Oqtane.Controllers
                 filtered.TwoFactorCode = "";
                 filtered.SecurityStamp = "";
 
-                // include private properties if authenticated user is accessing their own user account os is an administrator
+                // include private properties if authenticated user is accessing their own user account or is an administrator
                 if (_userPermissions.IsAuthorized(User, user.SiteId, EntityNames.User, -1, PermissionNames.Write, RoleNames.Admin) || _userPermissions.GetUser(User).UserId == user.UserId)
                 {
                     filtered.Email = user.Email;
+                    filtered.TimeZoneId = user.TimeZoneId;
                     filtered.PhotoFileId = user.PhotoFileId;
                     filtered.LastLoginOn = user.LastLoginOn;
                     filtered.LastIPAddress = user.LastIPAddress;
                     filtered.TwoFactorRequired = user.TwoFactorRequired;
+                    filtered.EmailConfirmed = user.EmailConfirmed;
                     filtered.Roles = user.Roles;
                     filtered.CreatedBy = user.CreatedBy;
                     filtered.CreatedOn = user.CreatedOn;
@@ -163,14 +165,13 @@ namespace Oqtane.Controllers
                 bool allowregistration;
                 if (_userPermissions.IsAuthorized(User, user.SiteId, EntityNames.User, -1, PermissionNames.Write, RoleNames.Admin))
                 {
-                    user.EmailConfirmed = true;
-                    user.IsAuthenticated = true;
+                    user.IsAuthenticated = true; // admins can add any existing user to a site
                     allowregistration = true;
                 }
                 else
                 {
-                    user.EmailConfirmed = false;
-                    user.IsAuthenticated = false;
+                    user.EmailConfirmed = false; // standard users cannot specify that their email is verified
+                    user.IsAuthenticated = false; // existing users can only be added to a site if they provide a valid username and password
                     allowregistration = _sites.GetSite(user.SiteId).AllowRegistration;
                 }
 
@@ -199,10 +200,15 @@ namespace Oqtane.Controllers
         [Authorize]
         public async Task<User> Put(int id, [FromBody] User user)
         {
-            if (ModelState.IsValid && user.SiteId == _tenantManager.GetAlias().SiteId && user.UserId == id && _users.GetUser(user.UserId, false) != null
+            var existing = _userManager.GetUser(user.UserId, user.SiteId);
+            if (ModelState.IsValid && user.SiteId == _tenantManager.GetAlias().SiteId && user.UserId == id && existing != null
                 && (_userPermissions.IsAuthorized(User, user.SiteId, EntityNames.User, -1, PermissionNames.Write, RoleNames.Admin) || User.Identity.Name == user.Username))
             {
-                user.EmailConfirmed = User.IsInRole(RoleNames.Admin);
+                // only authorized users can update the email confirmation
+                if (!_userPermissions.IsAuthorized(User, user.SiteId, EntityNames.User, -1, PermissionNames.Write, RoleNames.Admin))
+                {
+                    user.EmailConfirmed = existing.EmailConfirmed;
+                }
                 user = await _userManager.UpdateUser(user);
             }
             else
