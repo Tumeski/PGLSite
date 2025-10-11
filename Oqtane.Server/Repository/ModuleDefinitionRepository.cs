@@ -13,6 +13,16 @@ using Oqtane.Shared;
 
 namespace Oqtane.Repository
 {
+    public interface IModuleDefinitionRepository
+    {
+        IEnumerable<ModuleDefinition> GetModuleDefinitions();
+        IEnumerable<ModuleDefinition> GetModuleDefinitions(int siteId);
+        ModuleDefinition GetModuleDefinition(int moduleDefinitionId, int siteId);
+        void UpdateModuleDefinition(ModuleDefinition moduleDefinition);
+        void DeleteModuleDefinition(int moduleDefinitionId);
+        ModuleDefinition FilterModuleDefinition(ModuleDefinition moduleDefinition);
+    }
+
     public class ModuleDefinitionRepository : IModuleDefinitionRepository
     {
         private MasterDBContext _db;
@@ -186,6 +196,7 @@ namespace Oqtane.Repository
             if (siteId != -1)
             {
                 var siteKey = _tenants.GetAlias().SiteKey;
+                var dbType = _tenants.GetTenant().DBType;
                 var assemblies = new List<string>();
 
                 // get all module definition permissions for site
@@ -207,6 +218,22 @@ namespace Oqtane.Repository
                     else
                     {
                         moduledefinition.IsEnabled = moduledefinition.IsAutoEnabled;
+                    }
+
+                    // check if module supports tenant database
+                    if (moduledefinition.IsEnabled)
+                    {
+                        moduledefinition.IsEnabled = string.IsNullOrEmpty(moduledefinition.Databases);
+                        if (!string.IsNullOrEmpty(moduledefinition.Databases))
+                        {
+                            foreach (var database in moduledefinition.Databases.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                            {
+                                if (dbType.ToLower().Contains(database.ToLower()))
+                                {
+                                    moduledefinition.IsEnabled = true;
+                                }
+                            }
+                        }
                     }
 
                     if (moduledefinition.IsEnabled)
@@ -359,6 +386,7 @@ namespace Oqtane.Repository
                         moduledefinition.Categories = "Common";
                     }
 
+                    // default permissions
                     if (moduledefinition.Categories == "Admin")
                     {
                         var shortName = moduledefinition.ModuleDefinitionName.Replace("Oqtane.Modules.Admin.", "").Replace(", Oqtane.Client", "");
@@ -428,18 +456,21 @@ namespace Oqtane.Repository
         private List<Permission> ClonePermissions(int siteId, List<Permission> permissionList)
         {
             var permissions = new List<Permission>();
-            foreach (var p in permissionList)
+            if (permissionList != null)
             {
-                var permission = new Permission();
-                permission.SiteId = siteId;
-                permission.EntityName = p.EntityName;
-                permission.EntityId = p.EntityId;
-                permission.PermissionName = p.PermissionName;
-                permission.RoleId = null;
-                permission.RoleName = p.RoleName;
-                permission.UserId = p.UserId;
-                permission.IsAuthorized = p.IsAuthorized;
-                permissions.Add(permission);
+                foreach (var p in permissionList)
+                {
+                    var permission = new Permission();
+                    permission.SiteId = siteId;
+                    permission.EntityName = p.EntityName;
+                    permission.EntityId = p.EntityId;
+                    permission.PermissionName = p.PermissionName;
+                    permission.RoleId = null;
+                    permission.RoleName = p.RoleName;
+                    permission.UserId = p.UserId;
+                    permission.IsAuthorized = p.IsAuthorized;
+                    permissions.Add(permission);
+                }
             }
             return permissions;
         }

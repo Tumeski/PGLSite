@@ -14,6 +14,11 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
+using System.IO;
+using System.Text.RegularExpressions;
+using Oqtane.Migrations.Tenant;
+using Google.Protobuf.WellKnownTypes;
+using System;
 
 namespace Oqtane.Controllers
 {
@@ -89,7 +94,7 @@ namespace Oqtane.Controllers
                 // suppress unauthorized visitor logging as it is usually caused by clients that do not support cookies or private browsing sessions
                 if (entityName != EntityNames.Visitor) 
                 {
-                    _logger.Log(LogLevel.Error, this, LogFunction.Read, "User Not Authorized To Access Settings {EntityName} {EntityId}", entityName, entityId);
+                    _logger.Log(LogLevel.Error, this, LogFunction.Read, "User Not Authorized To Access Settings For EntityName {EntityName} And EntityId {EntityId}", entityName, entityId);
                     HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
                 }
             }
@@ -101,7 +106,7 @@ namespace Oqtane.Controllers
         public Setting Get(int id, string entityName)
         {
             Setting setting = _settings.GetSetting(entityName, id);
-            if (IsAuthorized(setting.EntityName, setting.EntityId, PermissionNames.View))
+            if (setting != null && IsAuthorized(setting.EntityName, setting.EntityId, PermissionNames.View))
             {
                 if (FilterPrivate(entityName, id) && setting.IsPrivate)
                 {
@@ -113,7 +118,7 @@ namespace Oqtane.Controllers
             {
                 if (setting != null && entityName != EntityNames.Visitor)
                 {
-                    _logger.Log(LogLevel.Error, this, LogFunction.Read, "User Not Authorized To Access Setting {EntityName} {SettingId}", entityName, id);
+                    _logger.Log(LogLevel.Error, this, LogFunction.Read, "User Not Authorized To Access SettingId {SettingId} For EntityName {EntityName} ", id, entityName);
                     HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
                 }
                 else
@@ -201,12 +206,65 @@ namespace Oqtane.Controllers
             }
             else
             {
-                _logger.Log(LogLevel.Error, this, LogFunction.Update, "User Not Authorized To Add Or Update Setting {EntityName} {EntityId} {SettingName}", entityName, entityId, settingName);
+                _logger.Log(LogLevel.Error, this, LogFunction.Update, "User Not Authorized To Add Or Update Setting For {EntityName}:{EntityId}", entityName, entityId);
                 HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
             }
         }
 
-        // DELETE api/<controller>/site/1/settingname
+        // PUT api/<controller>/site/1
+        [HttpPut("{entityName}/{entityId}")]
+        public void Put(string entityName, int entityId, [FromBody] List<Setting> settings)
+        {
+            if (ModelState.IsValid && IsAuthorized(entityName,entityId, PermissionNames.Edit))
+            {
+                var existingSettings = _settings.GetSettings(entityName, entityId).ToList();
+                foreach (Setting setting in settings)
+                {
+                    bool modified = false;
+
+                    // manage settings modified with SetSetting method
+                    if (setting.SettingValue.StartsWith("[Private]"))
+                    {
+                        modified = true;
+                        setting.IsPrivate = true;
+                        setting.SettingValue = setting.SettingValue.Substring(9);
+                    }
+                    if (setting.SettingValue.StartsWith("[Public]"))
+                    {
+                        modified = true;
+                        setting.IsPrivate = false;
+                        setting.SettingValue = setting.SettingValue.Substring(8);
+                    }
+
+                    Setting existingSetting = existingSettings.FirstOrDefault(item => item.SettingName.Equals(setting.SettingName, StringComparison.OrdinalIgnoreCase));
+                    if (existingSetting == null)
+                    {
+                        _settings.AddSetting(setting);
+                        AddSyncEvent(setting.EntityName, setting.EntityId, setting.SettingId, SyncEventActions.Create);
+                        _logger.Log(LogLevel.Information, this, LogFunction.Update, "Setting Created {Setting}", setting);
+
+                    }
+                    else
+                    {
+                        if (existingSetting.SettingValue != setting.SettingValue || (modified && existingSetting.IsPrivate != setting.IsPrivate))
+                        {
+                            existingSetting.SettingValue = setting.SettingValue;
+                            existingSetting.IsPrivate = setting.IsPrivate;
+                            _settings.UpdateSetting(existingSetting);
+                            AddSyncEvent(setting.EntityName, setting.EntityId, setting.SettingId, SyncEventActions.Update);
+                            _logger.Log(LogLevel.Information, this, LogFunction.Update, "Setting Updated {Setting}", setting);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                _logger.Log(LogLevel.Error, this, LogFunction.Update, "User Not Authorized To Update Settings For {EntityName}:{EntityId}", entityName, entityId);
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+            }
+        }
+
+        // DELETE api/<controller>/site/1/settingname/settingid
         [HttpDelete("{entityName}/{entityId}/{settingName}")]
         public void Delete(string entityName, int entityId, string settingName)
         {
@@ -221,9 +279,118 @@ namespace Oqtane.Controllers
             {
                 if (entityName != EntityNames.Visitor)
                 {
-                    _logger.Log(LogLevel.Error, this, LogFunction.Delete, "Setting Does Not Exist Or User Not Authorized To Delete Setting For Entity {EntityName} Id {EntityId} Name {SettingName}", entityName, entityId, settingName);
+                    _logger.Log(LogLevel.Error, this, LogFunction.Delete, "Setting Does Not Exist Or User Not Authorized To Delete Setting For EntityName {EntityName} EntityId {EntityId} SettingName {SettingName}", entityName, entityId, settingName);
                     HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
                 }
+            }
+        }
+
+        // DELETE api/<controller>/1/site
+        [HttpDelete("{id}/{entityName}")]
+        public void Delete(int id, string entityName)
+        {
+            Setting setting = _settings.GetSetting(entityName, id);
+            if (setting != null && IsAuthorized(setting.EntityName, setting.EntityId, PermissionNames.Edit))
+            {
+                _settings.DeleteSetting(setting.EntityName, setting.SettingId);
+                AddSyncEvent(setting.EntityName, setting.EntityId, setting.SettingId, SyncEventActions.Delete);
+                _logger.Log(LogLevel.Information, this, LogFunction.Delete, "Setting Deleted {Setting}", setting);
+            }
+            else
+            {
+                if (entityName != EntityNames.Visitor)
+                {
+                    _logger.Log(LogLevel.Error, this, LogFunction.Delete, "Setting Does Not Exist Or User Not Authorized To Delete Setting For SettingId {SettingId} For EntityName {EntityName} ", id, entityName);
+                    HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                }
+            }
+        }
+
+        // GET: api/<controller>/entitynames
+        [HttpGet("entitynames")]
+        [Authorize(Roles = RoleNames.Admin)]
+        public IEnumerable<string> GetEntityNames()
+        {
+            return _settings.GetEntityNames();
+        }
+
+        // GET: api/<controller>/entityids?entityname=x
+        [HttpGet("entityids")]
+        [Authorize(Roles = RoleNames.Admin)]
+        public IEnumerable<int> GetEntityIds(string entityName)
+        {
+            return _settings.GetEntityIds(entityName);
+        }
+
+        // POST api/<controller>/import?settings=x
+        [HttpPost("import")]
+        [Authorize(Roles = RoleNames.Host)]
+        public Result Import([FromBody] Result settings)
+        {
+            if (ModelState.IsValid && !string.IsNullOrEmpty(settings.Message))
+            {
+                int rows = 0;
+
+                using (StringReader reader = new StringReader(settings.Message))
+                {
+                    // regex to split by comma - ignoring commas within double quotes
+                    string pattern = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
+                    string row;
+
+                    while ((row = reader.ReadLine()) != null)
+                    {
+                        List<string> cols = new List<string>();
+                        string col = "";
+                        int startIndex = 0;
+
+                        MatchCollection matches = Regex.Matches(row, pattern);
+                        foreach (Match match in matches)
+                        {
+                            col = row.Substring(startIndex, match.Index - startIndex);
+                            if (col.StartsWith("\"") && col.EndsWith("\""))
+                            {
+                               col = col.Substring(1, col.Length - 2).Replace("\"\"", "\"");
+                            }
+                            cols.Add(col.Trim());
+                            startIndex = match.Index + match.Length;
+                        }
+                        col = row.Substring(startIndex);
+                        if (col.StartsWith("\"") && col.EndsWith("\""))
+                        {
+                            col = col.Substring(1, col.Length - 2).Replace("\"\"", "\"");
+                        }
+                        cols.Add(col.Trim());
+
+                        if (cols.Count == 5 && cols[0].ToLower() != "entity" && int.TryParse(cols[1], out int entityId) && bool.TryParse(cols[4], out bool isPrivate))
+                        {
+                            var setting = _settings.GetSetting(cols[0], entityId, cols[2]);
+                            if (setting == null)
+                            {
+                                _settings.AddSetting(new Setting { EntityName = cols[0], EntityId = entityId, SettingName = cols[2], SettingValue = cols[3], IsPrivate = isPrivate });
+                            }
+                            else
+                            {
+                                setting.SettingValue = cols[3];
+                                setting.IsPrivate = isPrivate;
+                                _settings.UpdateSetting(setting);
+                            }
+                            rows++;
+                        }
+                    }
+                }
+
+                _logger.Log(LogLevel.Information, this, LogFunction.Create, "Settings Imported {Settings}", settings.Message);
+                settings.Message = $"{rows} Settings Imported";
+                settings.Success = true;
+                return settings;
+            }
+            else
+            {
+                _logger.Log(LogLevel.Error, this, LogFunction.Security, "Unauthorized Settings Import Attempt {Settings}", settings.Message);
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                settings.Message = "";
+                settings.Success = false;
+                return settings;
             }
         }
 
@@ -276,6 +443,7 @@ namespace Oqtane.Controllers
                     }
                     break;
                 case EntityNames.Site:
+                case EntityNames.Role:
                     if (permissionName == PermissionNames.Edit)
                     {
                         authorized = User.IsInRole(RoleNames.Admin);
@@ -298,15 +466,21 @@ namespace Oqtane.Controllers
                     if (!authorized)
                     {
                         var visitorCookieName = Constants.VisitorCookiePrefix + _alias.SiteId.ToString();
-                        authorized = (entityId == GetVisitorCookieId(Request.Cookies[visitorCookieName]));
+                        authorized = (entityId == GetVisitorCookieId(HttpContext.Request.Cookies[visitorCookieName]));
                     }
                     break;
                 default: // custom entity
                     authorized = true;
                     if (permissionName == PermissionNames.Edit)
                     {
-                        authorized = _userPermissions.IsAuthorized(User, _alias.SiteId, entityName, entityId, permissionName) ||
-                            _userPermissions.IsAuthorized(User, _alias.SiteId, entityName, -1, PermissionNames.Write, RoleNames.Admin);
+                        if (entityId == -1)
+                        {
+                            authorized = User.IsInRole(entityName.ToLower().StartsWith("master:") ? RoleNames.Host : RoleNames.Admin);
+                        }
+                        else
+                        {
+                            authorized = _userPermissions.IsAuthorized(User, _alias.SiteId, entityName, entityId, permissionName);
+                        }
                     }
                     break;
             }
@@ -326,6 +500,7 @@ namespace Oqtane.Controllers
                     filter = !User.IsInRole(RoleNames.Host);
                     break;
                 case EntityNames.Site:
+                case EntityNames.Role:
                     filter = !User.IsInRole(RoleNames.Admin);
                     break;
                 case EntityNames.Page:
@@ -344,7 +519,7 @@ namespace Oqtane.Controllers
                     }
                     break;
                 default: // custom entity
-                    filter = !User.IsInRole(RoleNames.Admin) && !_userPermissions.IsAuthorized(User, _alias.SiteId, entityName, entityId, PermissionNames.Edit);
+                    filter = !User.IsInRole(entityName.ToLower().StartsWith("master:") ? RoleNames.Host : RoleNames.Admin) && !_userPermissions.IsAuthorized(User, _alias.SiteId, entityName, entityId, PermissionNames.Edit);
                     break;
             }
             return filter;
@@ -352,9 +527,14 @@ namespace Oqtane.Controllers
 
         private int GetVisitorCookieId(string visitorCookie)
         {
-            // visitor cookies contain the visitor id and an expiry date separated by a pipe symbol
-            visitorCookie = (visitorCookie.Contains("|")) ? visitorCookie.Split('|')[0] : visitorCookie;
-            return (int.TryParse(visitorCookie, out int visitorId)) ? visitorId : -1;
+            var visitorId = -1;
+            if (visitorCookie != null)
+            {
+                // visitor cookies now contain the visitor id and an expiry date separated by a pipe symbol
+                visitorCookie = (visitorCookie.Contains("|")) ? visitorCookie.Split('|')[0] : visitorCookie;
+                visitorId = int.TryParse(visitorCookie, out int _visitorId) ? _visitorId : -1;
+            }
+            return visitorId;
         }
 
         private void AddSyncEvent(string EntityName, int EntityId, int SettingId, string Action)

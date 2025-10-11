@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Oqtane.Enums;
 using Oqtane.Models;
+using Oqtane.Security;
 using Oqtane.Services;
 using Oqtane.Shared;
 using Oqtane.UI;
@@ -139,20 +140,42 @@ namespace Oqtane.Modules
             }
         }
 
-        // path method
+        // path methods
 
         public string ModulePath()
         {
             return PageState?.Alias.BaseUrl + "/Modules/" + GetType().Namespace + "/";
         }
 
+        public string StaticAssetPath
+        {
+            get
+            {
+                // requires module to have implemented IModule
+                return PageState?.Alias.BaseUrl + "_content/" + ModuleState.ModuleDefinition?.PackageName + "/";
+            }
+        }
+
         // fingerprint hash code for static assets
+
         public string Fingerprint
         {
             get
             {
                 return ModuleState.ModuleDefinition.Fingerprint;
             }
+        }
+
+        // authorization methods
+
+        public bool IsAuthorizedRole(string roleName)
+        {
+            return UserSecurity.IsAuthorized(PageState.User, roleName);
+        }
+
+        public bool IsAuthorizedPermission(string permissionName)
+        {
+            return UserSecurity.IsAuthorized(PageState.User, permissionName, ModuleState.PermissionList);
         }
 
         // url methods
@@ -356,7 +379,17 @@ namespace Oqtane.Modules
 
         public void AddModuleMessage(string message, MessageType type, string position)
         {
-            RenderModeBoundary.AddModuleMessage(message, type, position);
+            AddModuleMessage(message, type, position, MessageStyle.Alert);
+        }
+
+        public void AddModuleMessage(string message, MessageType type, MessageStyle style)
+        {
+            AddModuleMessage(message, type, "top", style);
+        }
+
+        public void AddModuleMessage(string message, MessageType type, string position, MessageStyle style)
+        {
+            RenderModeBoundary.AddModuleMessage(message, type, position, style);
         }
 
         public void ClearModuleMessage()
@@ -416,6 +449,9 @@ namespace Oqtane.Modules
             var interop = new Interop(JSRuntime);
             await interop.ScrollTo(0, 0, "smooth");
         }
+
+
+        // token replace methods
 
         public string ReplaceTokens(string content)
         {
@@ -501,11 +537,12 @@ namespace Oqtane.Modules
         }
 
         // date conversion methods
+
         public DateTime? UtcToLocal(DateTime? datetime)
         {
             // Early return if input is null
-            if (datetime == null)
-                return null;
+            if (datetime == null || datetime.Value == DateTime.MinValue || datetime.Value == DateTime.MaxValue)
+                return datetime;
 
             string timezoneId = null;
 
@@ -524,8 +561,8 @@ namespace Oqtane.Modules
         public DateTime? LocalToUtc(DateTime? datetime)
         {
             // Early return if input is null
-            if (datetime == null)
-                return null;
+            if (datetime == null || datetime.Value == DateTime.MinValue || datetime.Value == DateTime.MaxValue)
+                return datetime;
 
             string timezoneId = null;
 

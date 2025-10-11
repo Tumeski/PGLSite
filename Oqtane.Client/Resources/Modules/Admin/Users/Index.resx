@@ -513,6 +513,12 @@
   <data name="OIDC" xml:space="preserve">
     <value>OpenID Connect (OIDC)</value>
   </data>
+  <data name="RequireNonce.Text" xml:space="preserve">
+    <value>Require Nonce?</value>
+  </data>
+  <data name="RequireNonce.HelpText" xml:space="preserve">
+    <value>Specify if Nonce validation is required for the ID token (the default is true)</value>
+  </data>
   <data name="SaveTokens.Text" xml:space="preserve">
     <value>Save Tokens?</value>
   </data>
@@ -536,5 +542,23 @@
   </data>
   <data name="AllowHostRole.HelpText" xml:space="preserve">
     <value>Indicate if host roles are supported from the identity provider. Please use caution with this option as it allows the host user to administrate every site within your installation.</value>
+  </data>
+  <data name="Active Users" xml:space="preserve">
+    <value>Active Users</value>
+  </data>
+  <data name="Deleted Users" xml:space="preserve">
+    <value>Deleted Users</value>
+  </data>
+  <data name="CookieDomain.Text" xml:space="preserve">
+    <value>Cookie Domain:</value>
+  </data>
+  <data name="CookieDomain.HelpText" xml:space="preserve">
+    <value>If you would like to share cookies across subdomains you will need to specify a root domain with a leading dot (ie. '.example.com')</value>
+  </data>
+  <data name="SingleLogout.Text" xml:space="preserve">
+    <value>Allow Single Logout?</value>
+  </data>
+  <data name="SingleLogout.HelpText" xml:space="preserve">
+    <value>Specify if users should be logged out of both the application and provider (the default is false indicating they will only be logged out of the application)</value>
   </data>
 </root>

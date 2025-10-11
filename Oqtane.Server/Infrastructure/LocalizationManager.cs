@@ -9,6 +9,13 @@ using Oqtane.Shared;
 
 namespace Oqtane.Infrastructure
 {
+    public interface ILocalizationManager
+    {
+        string GetDefaultCulture();
+        string[] GetSupportedCultures();
+        string[] GetInstalledCultures();
+    }
+
     public class LocalizationManager : ILocalizationManager
     {
         private static readonly string DefaultCulture = Constants.DefaultCulture;
@@ -38,6 +45,12 @@ namespace Oqtane.Infrastructure
         }
 
         public string[] GetInstalledCultures()
+        {
+            return GetSatelliteAssemblyCultures();
+        }
+
+        // method is static as it is called during startup
+        public static string[] GetSatelliteAssemblyCultures()
         {
             var cultures = new List<string>();
             foreach (var file in Directory.EnumerateFiles(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), $"*{Constants.SatelliteAssemblyExtension}", SearchOption.AllDirectories))

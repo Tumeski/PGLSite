@@ -7,14 +7,22 @@ using Oqtane.Infrastructure.SiteTemplates;
 using Oqtane.Models;
 using Oqtane.Repository;
 using Oqtane.Shared;
+using Oqtane.UI;
+using Org.BouncyCastle.Pqc.Crypto.Lms;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
+using System.Runtime.Serialization;
 
 namespace Oqtane.Infrastructure
 {
+    public interface IUpgradeManager
+    {
+        void Upgrade(Tenant tenant, string version);
+    }
     public class UpgradeManager : IUpgradeManager
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
@@ -79,6 +87,15 @@ namespace Oqtane.Infrastructure
                         break;
                     case "6.1.1":
                         Upgrade_6_1_1(tenant, scope);
+                        break;
+                    case "6.1.5":
+                        Upgrade_6_1_5(tenant, scope);
+                        break;
+                    case "6.2.0":
+                        Upgrade_6_2_0(tenant, scope);
+                        break;
+                    case "6.2.1":
+                        Upgrade_6_2_1(tenant, scope);
                         break;
                 }
             }
@@ -533,6 +550,80 @@ namespace Oqtane.Infrastructure
             AddPagesToSites(scope, tenant, pageTemplates);
         }
 
+        private void Upgrade_6_1_5(Tenant tenant, IServiceScope scope)
+        {
+            // remove Database Providers which were moved to Oqtane.Server
+            string[] assemblies = {
+                "Oqtane.Database.MySQL.dll",
+                "Oqtane.Database.MySQL.pdb",
+                "Oqtane.Database.PostgreSQL.dll",
+                "Oqtane.Database.PostgreSQL.pdb",
+                "Oqtane.Database.Sqlite.dll",
+                "Oqtane.Database.Sqlite.pdb",
+                "Oqtane.Database.SqlServer.dll",
+                "Oqtane.Database.SqlServer.pdb"
+            };
+
+            RemoveAssemblies(tenant, assemblies, "6.1.5");
+        }
+
+        private void Upgrade_6_2_0(Tenant tenant, IServiceScope scope)
+        {
+            var pageTemplates = new List<PageTemplate>
+            {
+                new PageTemplate
+                {
+                    Update = false,
+                    Name = "Setting Management",
+                    Parent = "Admin",
+                    Order = 67,
+                    Path = "admin/settings",
+                    Icon = Icons.Cog,
+                    IsNavigation = false,
+                    IsPersonalizable = false,
+                    PermissionList = new List<Permission>
+                    {
+                        new Permission(PermissionNames.View, RoleNames.Host, true),
+                        new Permission(PermissionNames.Edit, RoleNames.Host, true)
+                    },
+                    PageTemplateModules = new List<PageTemplateModule>
+                    {
+                        new PageTemplateModule
+                        {
+                            ModuleDefinitionName = typeof(Oqtane.Modules.Admin.Settings.Index).ToModuleDefinitionName(), Title = "Setting Management", Pane = PaneNames.Default,
+                            PermissionList = new List<Permission>
+                            {
+                                new Permission(PermissionNames.View, RoleNames.Host, true),
+                                new Permission(PermissionNames.Edit, RoleNames.Host, true)
+                            },
+                            Content = ""
+                        }
+                    }
+                }
+            };
+
+            AddPagesToSites(scope, tenant, pageTemplates);
+        }
+
+        private void Upgrade_6_2_1(Tenant tenant, IServiceScope scope)
+        {
+            // remove text editor files moved to new location
+            string[] files = {
+                "js/quill.min.js.map",
+                "js/quill1.3.7.min.js",
+                "js/quill.min.js",
+                "js/quill-blot-formatter.min.js",
+                "js/quill-interop.js",
+                "css/quill/quill1.3.7.bubble.css",
+                "css/quill/quill.bubble.css",
+                "css/quill/quill1.3.7.snow.css",
+                "css/quill/quill.snow.css",
+                "oqtane-black.png"
+            };
+
+            RemoveFiles(tenant, files, "6.2.1");
+        }
+
         private void AddPagesToSites(IServiceScope scope, Tenant tenant, List<PageTemplate> pageTemplates)
         {
             var tenants = scope.ServiceProvider.GetRequiredService<ITenantManager>();
@@ -553,14 +644,35 @@ namespace Oqtane.Infrastructure
                 {
                     try
                     {
-                        var binFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-                        var filepath = Path.Combine(binFolder, assembly);
+                        var bin = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                        var filepath = Path.Combine(bin, assembly);
                         if (System.IO.File.Exists(filepath)) System.IO.File.Delete(filepath);
                     }
                     catch (Exception ex)
                     {
                         // error deleting asesmbly
                         _filelogger.LogError(Utilities.LogMessage(this, $"Oqtane Error: {version} Upgrade Error Removing {assembly} - {ex}"));
+                    }
+                }
+            }
+        }
+
+        private void RemoveFiles(Tenant tenant, string[] files, string version)
+        {
+            if (tenant.Name == TenantNames.Master)
+            {
+                foreach (var file in files)
+                {
+                    try
+                    {
+                        var wwwroot = _environment.WebRootPath;
+                        var filepath = Path.Combine(wwwroot, file);
+                        if (System.IO.File.Exists(filepath)) System.IO.File.Delete(filepath);
+                    }
+                    catch (Exception ex)
+                    {
+                        // error deleting file
+                        _filelogger.LogError(Utilities.LogMessage(this, $"Oqtane Error: {version} Upgrade Error Removing {file} - {ex}"));
                     }
                 }
             }

@@ -9,12 +9,24 @@ using Oqtane.Enums;
 using Oqtane.Infrastructure;
 using Oqtane.Models;
 using Oqtane.Modules;
-using Oqtane.Modules.Admin.Modules;
 using Oqtane.Shared;
 using Module = Oqtane.Models.Module;
 
 namespace Oqtane.Repository
 {
+    public interface ISiteRepository
+    {
+        IEnumerable<Site> GetSites();
+        Site AddSite(Site site);
+        Site UpdateSite(Site site);
+        Site GetSite(int siteId);
+        Site GetSite(int siteId, bool tracking);
+        void DeleteSite(int siteId);
+
+        void InitializeSite(Alias alias);
+        void CreatePages(Site site, List<PageTemplate> pageTemplates, Alias alias);
+    }
+
     public class SiteRepository : ISiteRepository
     {
         private readonly IDbContextFactory<TenantDBContext> _factory;
@@ -97,6 +109,11 @@ namespace Oqtane.Repository
 
         public void DeleteSite(int siteId)
         {
+            foreach (var role in _roleRepository.GetRoles(siteId, false))
+            {
+                _roleRepository.DeleteRole(role.RoleId);
+            }
+
             using var db = _factory.CreateDbContext();
             var site = db.Site.Find(siteId);
             db.Site.Remove(site);
@@ -118,7 +135,7 @@ namespace Oqtane.Repository
                         if (site != null)
                         {
                             // initialize theme Assemblies
-                            site.Themes = _themeRepository.GetThemes().ToList();
+                            site.Themes = _themeRepository.GetThemes(site.SiteId).ToList();
 
                             // initialize module Assemblies
                             var moduleDefinitions = _moduleDefinitionRepository.GetModuleDefinitions(alias.SiteId);

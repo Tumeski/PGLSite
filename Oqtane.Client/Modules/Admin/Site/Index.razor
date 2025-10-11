@@ -54,15 +54,18 @@
                     </select>
                 </div>
             </div>
-            <div class="row mb-1 align-items-center">
-                <Label Class="col-sm-3" For="isDeleted" HelpText="Is this site deleted?" ResourceKey="IsDeleted">Deleted? </Label>
-                <div class="col-sm-9">
-                    <select id="isDeleted" class="form-select" @bind="@_isdeleted" required>
-                        <option value="True">@SharedLocalizer["Yes"]</option>
-                        <option value="False">@SharedLocalizer["No"]</option>
-                    </select>
+            @if (UserSecurity.IsAuthorized(PageState.User, RoleNames.Host))
+            {
+                <div class="row mb-1 align-items-center">
+                    <Label Class="col-sm-3" For="isDeleted" HelpText="Is this site deleted?" ResourceKey="IsDeleted">Deleted? </Label>
+                    <div class="col-sm-9">
+                        <select id="isDeleted" class="form-select" @bind="@_isdeleted" required>
+                            <option value="True">@SharedLocalizer["Yes"]</option>
+                            <option value="False">@SharedLocalizer["No"]</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
+            }
             <div class="row mb-1 align-items-center">
                 <Label Class="col-sm-3" For="sitemap" HelpText="The site map url for this site which can be submitted to search engines for indexing. The sitemap is cached for 5 minutes and the cache can be manually cleared." ResourceKey="SiteMap">Site Map: </Label>
                 <div class="col-sm-9">
@@ -202,7 +205,7 @@
                         </select>
                     </div>
                 </div>
-                @if (_smtpenabled == "True")
+                @if (_smtpenabled == "True" && UserSecurity.IsAuthorized(PageState.User, RoleNames.Host))
                 {
                     <div class="row mb-1 align-items-center">
                         <div class="col-sm-3">
@@ -224,11 +227,14 @@
                         </div>
                     </div>
                     <div class="row mb-1 align-items-center">
-                        <Label Class="col-sm-3" For="smtpssl" HelpText="Specify if SSL is required for your SMTP server" ResourceKey="SmtpSSL">SSL Required: </Label>
+                        <Label Class="col-sm-3" For="smtpssl" HelpText="Specify the type of SSL connection for your SMTP server" ResourceKey="SmtpSSL">SSL Options: </Label>
                         <div class="col-sm-9">
-                            <select id="smtpssl" class="form-select" @bind="@_smtpssl" >
-                                <option value="True">@SharedLocalizer["Yes"]</option>
-                                <option value="False">@SharedLocalizer["No"]</option>
+                            <select id="smtpssl" class="form-select" @bind="@_smtpssl">
+                                <option value="None">@Localizer["None"]</option>
+                                <option value="Auto">@Localizer["Auto"]</option>
+                                <option value="StartTls">@Localizer["StartTls"]</option>
+                                <option value="SslOnConnect">@Localizer["SslOnConnect"]</option>
+                                <option value="StartTlsWhenAvailable">@Localizer["StartTlsWhenAvailable"]</option>
                             </select>
                         </div>
                     </div>
@@ -504,7 +510,7 @@
     private string _smtpauthentication = "Basic";
     private string _smtphost = string.Empty;
     private string _smtpport = string.Empty;
-    private string _smtpssl = "True";
+    private string _smtpssl = "Auto";
     private string _smtpusername = string.Empty;
     private string _smtppassword = string.Empty;
     private string _smtppasswordtype = "password";
@@ -586,9 +592,17 @@
                 {
                     _faviconfileid = site.FaviconFileId.Value;
                 }
-                _themes = ThemeService.GetThemeControls(PageState.Site.Themes);
+                var themes = new List<Theme>();
+                foreach (var theme in PageState.Site.Themes)
+                {
+                    if (UserSecurity.IsAuthorized(PageState.User, PermissionNames.Utilize, theme.PermissionList))
+                    {
+                        themes.Add(theme);
+                    }
+                }
+                _themes = ThemeService.GetThemeControls(themes);
                 _themetype = (!string.IsNullOrEmpty(site.DefaultThemeType)) ? site.DefaultThemeType : Constants.DefaultTheme;
-                _containers = ThemeService.GetContainerControls(PageState.Site.Themes, _themetype);
+                _containers = ThemeService.GetContainerControls(themes, _themetype);
                 _containertype = (!string.IsNullOrEmpty(site.DefaultContainerType)) ? site.DefaultContainerType : Constants.DefaultContainer;
                 _admincontainertype = (!string.IsNullOrEmpty(site.AdminContainerType)) ? site.AdminContainerType : Constants.DefaultAdminContainer;
                 _cookieconsent = SettingService.GetSetting(settings, "CookieConsent", string.Empty);
@@ -609,21 +623,26 @@
 
                 // SMTP
                 _smtpenabled = SettingService.GetSetting(settings, "SMTPEnabled", "False");
-                _smtphost = SettingService.GetSetting(settings, "SMTPHost", string.Empty);
-                _smtpport = SettingService.GetSetting(settings, "SMTPPort", string.Empty);
-                _smtpssl = SettingService.GetSetting(settings, "SMTPSSL", "False");
-                _smtpauthentication = SettingService.GetSetting(settings, "SMTPAuthentication", "Basic");
-                _smtpusername = SettingService.GetSetting(settings, "SMTPUsername", string.Empty);
-                _smtppassword = SettingService.GetSetting(settings, "SMTPPassword", string.Empty);
-                _togglesmtppassword = SharedLocalizer["ShowPassword"];
-                _smtpauthority = SettingService.GetSetting(settings, "SMTPAuthority", string.Empty);
-                _smtpclientid = SettingService.GetSetting(settings, "SMTPClientId", string.Empty);
-                _smtpclientsecret = SettingService.GetSetting(settings, "SMTPClientSecret", string.Empty);
-                _togglesmtpclientsecret = SharedLocalizer["ShowPassword"];
-                _smtpscopes = SettingService.GetSetting(settings, "SMTPScopes", string.Empty);
-                _smtpsender = SettingService.GetSetting(settings, "SMTPSender", string.Empty);
-                _smtprelay = SettingService.GetSetting(settings, "SMTPRelay", "False");
-                _retention = int.Parse(SettingService.GetSetting(settings, "NotificationRetention", "30"));
+                if (UserSecurity.IsAuthorized(PageState.User, RoleNames.Host))
+                {
+                    _smtphost = SettingService.GetSetting(settings, "SMTPHost", string.Empty);
+                    _smtpport = SettingService.GetSetting(settings, "SMTPPort", string.Empty);
+                    _smtpssl = SettingService.GetSetting(settings, "SMTPSSL", "Auto");
+                    if (_smtpssl == "True") _smtpssl = "SslOnConnect";
+                    if (_smtpssl == "False") _smtpssl = "StartTlsWhenAvailable";
+                    _smtpauthentication = SettingService.GetSetting(settings, "SMTPAuthentication", "Basic");
+                    _smtpusername = SettingService.GetSetting(settings, "SMTPUsername", string.Empty);
+                    _smtppassword = SettingService.GetSetting(settings, "SMTPPassword", string.Empty);
+                    _togglesmtppassword = SharedLocalizer["ShowPassword"];
+                    _smtpauthority = SettingService.GetSetting(settings, "SMTPAuthority", string.Empty);
+                    _smtpclientid = SettingService.GetSetting(settings, "SMTPClientId", string.Empty);
+                    _smtpclientsecret = SettingService.GetSetting(settings, "SMTPClientSecret", string.Empty);
+                    _togglesmtpclientsecret = SharedLocalizer["ShowPassword"];
+                    _smtpscopes = SettingService.GetSetting(settings, "SMTPScopes", string.Empty);
+                    _smtpsender = SettingService.GetSetting(settings, "SMTPSender", string.Empty);
+                    _smtprelay = SettingService.GetSetting(settings, "SMTPRelay", "False");
+                    _retention = int.Parse(SettingService.GetSetting(settings, "NotificationRetention", "30"));
+                }
 
                 // PWA
                 _pwaisenabled = site.PwaIsEnabled.ToString();
@@ -654,7 +673,8 @@
                     if (tenant != null)
                     {
                         _tenant = tenant.Name;
-                        _database = _databases.Find(item => item.DBType == tenant.DBType && item.Name != "LocalDB")?.Name;
+                        // hack - there are 3 providers with SqlServerDatabase DBTypes - so we are choosing the last one in alphabetical order
+                        _database = _databases.Where(item => item.DBType == tenant.DBType).OrderBy(item => item.Name).Last()?.Name;
                         _connectionstring = tenant.DBConnectionString;
                     }
                 }
@@ -800,21 +820,23 @@
 
                         // SMTP
                         var settings = await SettingService.GetSiteSettingsAsync(site.SiteId);
-                        settings = SettingService.SetSetting(settings, "SMTPHost", _smtphost, true);
-                        settings = SettingService.SetSetting(settings, "SMTPPort", _smtpport, true);
-                        settings = SettingService.SetSetting(settings, "SMTPSSL", _smtpssl, true);
-                        settings = SettingService.SetSetting(settings, "SMTPAuthentication", _smtpauthentication, true);
-                        settings = SettingService.SetSetting(settings, "SMTPUsername", _smtpusername, true);
-                        settings = SettingService.SetSetting(settings, "SMTPPassword", _smtppassword, true);
-                        settings = SettingService.SetSetting(settings, "SMTPAuthority", _smtpauthority, true);
-                        settings = SettingService.SetSetting(settings, "SMTPClientId", _smtpclientid, true);
-                        settings = SettingService.SetSetting(settings, "SMTPClientSecret", _smtpclientsecret, true);
-                        settings = SettingService.SetSetting(settings, "SMTPScopes", _smtpscopes, true);
-                        settings = SettingService.SetSetting(settings, "SMTPSender", _smtpsender, true);
-                        settings = SettingService.SetSetting(settings, "SMTPRelay", _smtprelay, true);
                         settings = SettingService.SetSetting(settings, "SMTPEnabled", _smtpenabled, true);
-                        settings = SettingService.SetSetting(settings, "SiteGuid", _siteguid, true);
-                        settings = SettingService.SetSetting(settings, "NotificationRetention", _retention.ToString(), true);
+                        if (UserSecurity.IsAuthorized(PageState.User, RoleNames.Host))
+                        {
+                            settings = SettingService.SetSetting(settings, "SMTPHost", _smtphost, true);
+                            settings = SettingService.SetSetting(settings, "SMTPPort", _smtpport, true);
+                            settings = SettingService.SetSetting(settings, "SMTPSSL", _smtpssl, true);
+                            settings = SettingService.SetSetting(settings, "SMTPAuthentication", _smtpauthentication, true);
+                            settings = SettingService.SetSetting(settings, "SMTPUsername", _smtpusername, true);
+                            settings = SettingService.SetSetting(settings, "SMTPPassword", _smtppassword, true);
+                            settings = SettingService.SetSetting(settings, "SMTPAuthority", _smtpauthority, true);
+                            settings = SettingService.SetSetting(settings, "SMTPClientId", _smtpclientid, true);
+                            settings = SettingService.SetSetting(settings, "SMTPClientSecret", _smtpclientsecret, true);
+                            settings = SettingService.SetSetting(settings, "SMTPScopes", _smtpscopes, true);
+                            settings = SettingService.SetSetting(settings, "SMTPSender", _smtpsender, true);
+                            settings = SettingService.SetSetting(settings, "SMTPRelay", _smtprelay, true);
+                            settings = SettingService.SetSetting(settings, "NotificationRetention", _retention.ToString(), true);
+                        }
 
                         //cookie consent
                         settings = SettingService.SetSetting(settings, "CookieConsent", _cookieconsent);
@@ -822,6 +844,7 @@
                         // functionality
                         settings = SettingService.SetSetting(settings, "TextEditor", _textEditor);
 
+                        settings = SettingService.SetSetting(settings, "SiteGuid", _siteguid, true);
                         await SettingService.UpdateSiteSettingsAsync(settings, site.SiteId);
 
                         await logger.LogInformation("Site Settings Saved {Site}", site);

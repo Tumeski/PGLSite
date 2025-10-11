@@ -1,13 +1,36 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Oqtane.Enums;
 using Oqtane.Infrastructure;
 using Oqtane.Models;
+using Oqtane.Modules.Admin.Users;
 using Oqtane.Shared;
 
 namespace Oqtane.Repository
 {
+    public interface ISettingRepository
+    {
+        IEnumerable<Setting> GetSettings(string entityName);
+        IEnumerable<Setting> GetSettings(string entityName, int entityId);
+        IEnumerable<Setting> GetSettings(string entityName1, int entityId1, string entityName2, int entityId2);
+        Setting AddSetting(Setting setting);
+        Setting UpdateSetting(Setting setting);
+        Setting GetSetting(string entityName, int settingId);
+        Setting GetSetting(string entityName, int entityId, string settingName);
+        void DeleteSetting(string entityName, int settingId);
+        void DeleteSettings(string entityName, int entityId);
+        IEnumerable<string> GetEntityNames();
+        IEnumerable<int> GetEntityIds(string entityName);
+
+        string GetSettingValue(IEnumerable<Setting> settings, string settingName, string defaultValue);
+        string GetSettingValue(string entityName, int entityId, string settingName, string defaultValue);
+    }
+
     public class SettingRepository : ISettingRepository
     {
         private readonly IDbContextFactory<TenantDBContext> _tenantContextFactory;
@@ -38,7 +61,15 @@ namespace Oqtane.Repository
 
         public IEnumerable<Setting> GetSettings(string entityName, int entityId)
         {
-            return GetSettings(entityName).Where(item => item.EntityId == entityId);
+            if (IsMaster(entityName))
+            {
+                return _master.Setting.Where(item => item.EntityName == entityName && item.EntityId == entityId).ToList();
+            }
+            else
+            {
+                using var db = _tenantContextFactory.CreateDbContext();
+                return db.Setting.Where(item => item.EntityName == entityName && item.EntityId == entityId).ToList();
+            }
         }
 
         public IEnumerable<Setting> GetSettings(string entityName1, int entityId1, string entityName2, int entityId2)
@@ -167,6 +198,18 @@ namespace Oqtane.Repository
             ManageCache(entityName);
         }
 
+        public IEnumerable<string> GetEntityNames()
+        {
+            using var db = _tenantContextFactory.CreateDbContext();
+            return db.Setting.Select(item => item.EntityName).Distinct().OrderBy(item => item).ToList();
+        }
+        public IEnumerable<int> GetEntityIds(string entityName)
+        {
+            using var db = _tenantContextFactory.CreateDbContext();
+            return db.Setting.Where(item => item.EntityName == entityName)
+                .Select(item => item.EntityId).Distinct().OrderBy(item => item).ToList();
+        }
+
         public string GetSettingValue(IEnumerable<Setting> settings, string settingName, string defaultValue)
         {
             var setting = settings.FirstOrDefault(item => item.SettingName == settingName);
@@ -195,7 +238,9 @@ namespace Oqtane.Repository
 
         private bool IsMaster(string EntityName)
         {
-            return (EntityName == EntityNames.ModuleDefinition || EntityName == EntityNames.Host);
+            return EntityName == EntityNames.Host || EntityName == EntityNames.Job ||
+                EntityName == EntityNames.ModuleDefinition || EntityName == EntityNames.Theme ||
+                EntityName.ToLower().StartsWith("master:");
         }
 
         private void ManageCache(string EntityName)

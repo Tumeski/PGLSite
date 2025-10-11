@@ -17,8 +17,21 @@ else
 {
     <TabStrip>
         <TabPanel Name="Users" Heading="Users" ResourceKey="Users">
-            <ActionLink Action="Add" Text="Add User" Security="SecurityAccessLevel.Edit" ResourceKey="AddUser" />&nbsp;
-            <ActionLink Text="Import Users" Class="btn btn-secondary ms-2" Action="Users" Security="SecurityAccessLevel.Admin" ResourceKey="ImportUsers"/>
+            <div class="container">
+                <div class="row mb-1 align-items-center">
+                    <div class="col-sm-6">
+                        <ActionLink Action="Add" Text="Add User" Security="SecurityAccessLevel.Edit" ResourceKey="AddUser" />&nbsp;
+                        <ActionLink Text="Import Users" Class="btn btn-secondary ms-2" Action="Users" Security="SecurityAccessLevel.Admin" ResourceKey="ImportUsers" />
+                    </div>
+                    <div class="col-sm-6">
+                        <select id="deleted" class="form-select custom-select" value="@_deleted" @onchange="(e => DeletedChanged(e))">
+                            <option value="false">@Localizer["Active Users"]</option>
+                            <option value="true">@Localizer["Deleted Users"]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <br />
 
             <Pager Items="@users" RowClass="align-middle" SearchProperties="User.Username,User.Email,User.DisplayName">
                 <Header>
@@ -99,6 +112,12 @@ else
                             <Label Class="col-sm-3" For="cookiename" HelpText="You can choose to use a custom authentication cookie name for each site. However please be aware that if you want to share an authentication cookie between sites on the same domain they need to use a consistent cookie name. Also be aware that changing the authentication cookie name will logout all current users." ResourceKey="CookieName">Cookie Name:</Label>
                             <div class="col-sm-9">
                                 <input id="cookiename" class="form-control" @bind="@_cookiename" />
+                            </div>
+                        </div>
+                        <div class="row mb-1 align-items-center">
+                            <Label Class="col-sm-3" For="cookiedomain" HelpText="If you would like to share cookies across subdomains you will need to specify a root domain with a leading dot (ie. '.example.com')" ResourceKey="CookieDomain">Cookie Domain:</Label>
+                            <div class="col-sm-9">
+                                <input id="cookiedomain" class="form-control" @bind="@_cookiedomain" />
                             </div>
                         </div>
                         <div class="row mb-1 align-items-center">
@@ -301,6 +320,24 @@ else
                                         </select>
                                     </div>
                                 </div>
+                                <div class="row mb-1 align-items-center">
+                                    <Label Class="col-sm-3" For="requirenonce" HelpText="Specify if Nonce validation is required for the ID token (the default is true)" ResourceKey="RequireNonce">Require Nonce?</Label>
+                                    <div class="col-sm-9">
+                                        <select id="requirenonce" class="form-select" @bind="@_requirenonce" required>
+                                            <option value="true">@SharedLocalizer["Yes"]</option>
+                                            <option value="false">@SharedLocalizer["No"]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-1 align-items-center">
+                                    <Label Class="col-sm-3" For="singlelogout" HelpText="Specify if users should be logged out of both the application and provider (the default is false indicating they will only be logged out of the application)" ResourceKey="SingleLogout">Use Single Logout?</Label>
+                                    <div class="col-sm-9">
+                                        <select id="singlelogout" class="form-select" @bind="@_singlelogout" required>
+                                            <option value="true">@SharedLocalizer["Yes"]</option>
+                                            <option value="false">@SharedLocalizer["No"]</option>
+                                        </select>
+                                    </div>
+                                </div>
                             }
                             <div class="row mb-1 align-items-center">
                                 <Label Class="col-sm-3" For="scopes" HelpText="A list of Scopes to request from the provider (separated by commas). If none are specified, standard Scopes will be used by default." ResourceKey="Scopes">Scopes:</Label>
@@ -495,6 +532,7 @@ else
 
 @code {
     private List<UserRole> users;
+    private string _deleted = "false";
 
     private string _allowregistration;
     private string _registerurl;
@@ -502,6 +540,7 @@ else
     private string _requireconfirmedemail;
     private string _twofactor;
     private string _cookiename;
+    private string _cookiedomain;
     private string _cookieexpiration;
     private string _alwaysremember;
     private string _logouteverywhere;
@@ -529,6 +568,8 @@ else
     private string _clientsecrettype = "password";
     private string _toggleclientsecret = string.Empty;
     private string _authresponsetype;
+    private string _requirenonce;
+    private string _singlelogout;
     private string _scopes;
     private string _parameters;
     private string _pkce;
@@ -564,7 +605,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadUsersAsync(true);
+        await LoadUsersAsync();
 
         var settings = await SettingService.GetSiteSettingsAsync(PageState.Site.SiteId);
         _allowregistration = PageState.Site.AllowRegistration.ToString().ToLower();
@@ -576,6 +617,7 @@ else
         {
             _twofactor = SettingService.GetSetting(settings, "LoginOptions:TwoFactor", "false");
             _cookiename = SettingService.GetSetting(settings, "LoginOptions:CookieName", ".AspNetCore.Identity.Application");
+            _cookiedomain = SettingService.GetSetting(settings, "LoginOptions:CookieDomain", "");
             _cookieexpiration = SettingService.GetSetting(settings, "LoginOptions:CookieExpiration", "");
             _alwaysremember = SettingService.GetSetting(settings, "LoginOptions:AlwaysRemember", "false");
             _logouteverywhere = SettingService.GetSetting(settings, "LoginOptions:LogoutEverywhere", "false");
@@ -615,6 +657,8 @@ else
         _clientsecret = SettingService.GetSetting(settings, "ExternalLogin:ClientSecret", "");
         _toggleclientsecret = SharedLocalizer["ShowPassword"];
         _authresponsetype = SettingService.GetSetting(settings, "ExternalLogin:AuthResponseType", "code");
+        _requirenonce = SettingService.GetSetting(settings, "ExternalLogin:RequireNonce", "true");
+        _singlelogout = SettingService.GetSetting(settings, "ExternalLogin:SingleLogout", "false");
         _scopes = SettingService.GetSetting(settings, "ExternalLogin:Scopes", "");
         _parameters = SettingService.GetSetting(settings, "ExternalLogin:Parameters", "");
         _pkce = SettingService.GetSetting(settings, "ExternalLogin:PKCE", "false");
@@ -636,20 +680,32 @@ else
         _allowsitelogin = SettingService.GetSetting(settings, "LoginOptions:AllowSiteLogin", "true");
     }
 
-    private async Task LoadUsersAsync(bool load)
+    private async Task LoadUsersAsync()
     {
-        if (load)
+        users = await UserRoleService.GetUserRolesAsync(PageState.Site.SiteId, RoleNames.Registered);
+        if (UserSecurity.IsAuthorized(PageState.User, RoleNames.Host))
         {
-            users = await UserRoleService.GetUserRolesAsync(PageState.Site.SiteId, RoleNames.Registered);
-            if (UserSecurity.IsAuthorized(PageState.User, RoleNames.Host))
-            {
-                var hosts = await UserRoleService.GetUserRolesAsync(PageState.Site.SiteId, RoleNames.Host);
-                users.AddRange(hosts);
-                users = users.OrderBy(u => u.User.DisplayName).ToList();
-            }           
+            var hosts = await UserRoleService.GetUserRolesAsync(PageState.Site.SiteId, RoleNames.Host);
+            users.AddRange(hosts);
+            users = users.OrderBy(u => u.User.DisplayName).ToList();
         }
+        users = users.Where(item => item.User.IsDeleted == bool.Parse(_deleted)).ToList();
     }
 
+    private async void DeletedChanged(ChangeEventArgs e)
+    {
+        try
+        {
+            _deleted = e.Value.ToString();
+            await LoadUsersAsync();
+			StateHasChanged();
+		}
+		catch (Exception ex)
+		{
+			await logger.LogError(ex, "Error On DeletedChanged");
+		}
+	}
+    
     private async Task DeleteUser(UserRole UserRole)
     {
         try
@@ -672,7 +728,7 @@ else
                 await logger.LogInformation("User {Username} Expired From Role {Role}", userrole.User.Username, userrole.Role.Name);
             }
             AddModuleMessage(Localizer["Success.DeleteUser"], MessageType.Success);
-            await LoadUsersAsync(true);
+            await LoadUsersAsync();
             StateHasChanged();
         }
         catch (Exception ex)
@@ -699,6 +755,7 @@ else
                 settings = SettingService.SetSetting(settings, "LoginOptions:RequireConfirmedEmail", _requireconfirmedemail, false);
                 settings = SettingService.SetSetting(settings, "LoginOptions:TwoFactor", _twofactor, false);
                 settings = SettingService.SetSetting(settings, "LoginOptions:CookieName", _cookiename, true);
+                settings = SettingService.SetSetting(settings, "LoginOptions:CookieDomain", _cookiedomain, true);
                 settings = SettingService.SetSetting(settings, "LoginOptions:CookieExpiration", _cookieexpiration, true);
                 settings = SettingService.SetSetting(settings, "LoginOptions:AlwaysRemember", _alwaysremember, false);
                 settings = SettingService.SetSetting(settings, "LoginOptions:LogoutEverywhere", _logouteverywhere, false);
@@ -724,6 +781,8 @@ else
                 settings = SettingService.SetSetting(settings, "ExternalLogin:ClientId", _clientid, true);
                 settings = SettingService.SetSetting(settings, "ExternalLogin:ClientSecret", _clientsecret, true);
                 settings = SettingService.SetSetting(settings, "ExternalLogin:AuthResponseType", _authresponsetype, true);
+                settings = SettingService.SetSetting(settings, "ExternalLogin:RequireNonce", _requirenonce, true);
+                settings = SettingService.SetSetting(settings, "ExternalLogin:SingleLogout", _singlelogout, true);
                 settings = SettingService.SetSetting(settings, "ExternalLogin:Scopes", _scopes, true);
                 settings = SettingService.SetSetting(settings, "ExternalLogin:Parameters", _parameters, true);
                 settings = SettingService.SetSetting(settings, "ExternalLogin:PKCE", _pkce, true);
