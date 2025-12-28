@@ -16,8 +16,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
 using System.IO;
 using System.Text.RegularExpressions;
-using Oqtane.Migrations.Tenant;
-using Google.Protobuf.WellKnownTypes;
 using System;
 
 namespace Oqtane.Controllers
@@ -92,7 +90,7 @@ namespace Oqtane.Controllers
             else
             {
                 // suppress unauthorized visitor logging as it is usually caused by clients that do not support cookies or private browsing sessions
-                if (entityName != EntityNames.Visitor) 
+                if (FormatName(entityName) != EntityNames.Visitor) 
                 {
                     _logger.Log(LogLevel.Error, this, LogFunction.Read, "User Not Authorized To Access Settings For EntityName {EntityName} And EntityId {EntityId}", entityName, entityId);
                     HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
@@ -116,7 +114,7 @@ namespace Oqtane.Controllers
             }
             else
             {
-                if (setting != null && entityName != EntityNames.Visitor)
+                if (setting != null && FormatName(entityName) != EntityNames.Visitor)
                 {
                     _logger.Log(LogLevel.Error, this, LogFunction.Read, "User Not Authorized To Access SettingId {SettingId} For EntityName {EntityName} ", id, entityName);
                     HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
@@ -141,7 +139,7 @@ namespace Oqtane.Controllers
             }
             else
             {
-                if (setting.EntityName != EntityNames.Visitor)
+                if (FormatName(setting.EntityName) != EntityNames.Visitor)
                 {
                     _logger.Log(LogLevel.Error, this, LogFunction.Create, "User Not Authorized To Add Setting {Setting}", setting);
                     HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
@@ -163,7 +161,7 @@ namespace Oqtane.Controllers
             }
             else
             {
-                if (setting.EntityName != EntityNames.Visitor)
+                if (FormatName(setting.EntityName) != EntityNames.Visitor)
                 {
                     _logger.Log(LogLevel.Error, this, LogFunction.Update, "User Not Authorized To Update Setting {Setting}", setting);
                     HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
@@ -220,39 +218,25 @@ namespace Oqtane.Controllers
                 var existingSettings = _settings.GetSettings(entityName, entityId).ToList();
                 foreach (Setting setting in settings)
                 {
-                    bool modified = false;
-
-                    // manage settings modified with SetSetting method
-                    if (setting.SettingValue.StartsWith("[Private]"))
+                    Setting existing = existingSettings.FirstOrDefault(item => item.SettingName.Equals(setting.SettingName, StringComparison.OrdinalIgnoreCase));
+                    if (existing == null)
                     {
-                        modified = true;
-                        setting.IsPrivate = true;
-                        setting.SettingValue = setting.SettingValue.Substring(9);
-                    }
-                    if (setting.SettingValue.StartsWith("[Public]"))
-                    {
-                        modified = true;
-                        setting.IsPrivate = false;
-                        setting.SettingValue = setting.SettingValue.Substring(8);
-                    }
-
-                    Setting existingSetting = existingSettings.FirstOrDefault(item => item.SettingName.Equals(setting.SettingName, StringComparison.OrdinalIgnoreCase));
-                    if (existingSetting == null)
-                    {
-                        _settings.AddSetting(setting);
-                        AddSyncEvent(setting.EntityName, setting.EntityId, setting.SettingId, SyncEventActions.Create);
-                        _logger.Log(LogLevel.Information, this, LogFunction.Update, "Setting Created {Setting}", setting);
+                        setting.SettingId = 0; // initialize
+                        existing = _settings.AddSetting(setting);
+                        AddSyncEvent(existing.EntityName, existing.EntityId, existing.SettingId, SyncEventActions.Create);
+                        _logger.Log(LogLevel.Information, this, LogFunction.Update, "Setting Created {Setting}", existing);
 
                     }
                     else
                     {
-                        if (existingSetting.SettingValue != setting.SettingValue || (modified && existingSetting.IsPrivate != setting.IsPrivate))
+                        // note that setting.SettingId will be 0 or -1 if the Settings were converted from a Dictionary in the SettingService
+                        if (existing.SettingValue != setting.SettingValue || (existing.IsPrivate != setting.IsPrivate && setting.SettingId != 0))
                         {
-                            existingSetting.SettingValue = setting.SettingValue;
-                            existingSetting.IsPrivate = setting.IsPrivate;
-                            _settings.UpdateSetting(existingSetting);
-                            AddSyncEvent(setting.EntityName, setting.EntityId, setting.SettingId, SyncEventActions.Update);
-                            _logger.Log(LogLevel.Information, this, LogFunction.Update, "Setting Updated {Setting}", setting);
+                            existing.SettingValue = setting.SettingValue;
+                            existing.IsPrivate = setting.IsPrivate;
+                            existing = _settings.UpdateSetting(existing);
+                            AddSyncEvent(existing.EntityName, existing.EntityId, existing.SettingId, SyncEventActions.Update);
+                            _logger.Log(LogLevel.Information, this, LogFunction.Update, "Setting Updated {Setting}", existing);
                         }
                     }
                 }
@@ -277,7 +261,7 @@ namespace Oqtane.Controllers
             }
             else
             {
-                if (entityName != EntityNames.Visitor)
+                if (FormatName(entityName) != EntityNames.Visitor)
                 {
                     _logger.Log(LogLevel.Error, this, LogFunction.Delete, "Setting Does Not Exist Or User Not Authorized To Delete Setting For EntityName {EntityName} EntityId {EntityId} SettingName {SettingName}", entityName, entityId, settingName);
                     HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
@@ -298,7 +282,7 @@ namespace Oqtane.Controllers
             }
             else
             {
-                if (entityName != EntityNames.Visitor)
+                if (FormatName(entityName) != EntityNames.Visitor)
                 {
                     _logger.Log(LogLevel.Error, this, LogFunction.Delete, "Setting Does Not Exist Or User Not Authorized To Delete Setting For SettingId {SettingId} For EntityName {EntityName} ", id, entityName);
                     HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
@@ -366,13 +350,16 @@ namespace Oqtane.Controllers
                             var setting = _settings.GetSetting(cols[0], entityId, cols[2]);
                             if (setting == null)
                             {
-                                _settings.AddSetting(new Setting { EntityName = cols[0], EntityId = entityId, SettingName = cols[2], SettingValue = cols[3], IsPrivate = isPrivate });
+                                setting = new Setting { EntityName = cols[0], EntityId = entityId, SettingName = cols[2], SettingValue = cols[3], IsPrivate = isPrivate };
+                                _settings.AddSetting(setting);
+                                AddSyncEvent(setting.EntityName, setting.EntityId, setting.SettingId, SyncEventActions.Create);
                             }
                             else
                             {
                                 setting.SettingValue = cols[3];
                                 setting.IsPrivate = isPrivate;
                                 _settings.UpdateSetting(setting);
+                                AddSyncEvent(setting.EntityName, setting.EntityId, setting.SettingId, SyncEventActions.Update);
                             }
                             rows++;
                         }
@@ -421,19 +408,21 @@ namespace Oqtane.Controllers
         private bool IsAuthorized(string entityName, int entityId, string permissionName)
         {
             bool authorized = false;
+
             if (entityName == EntityNames.PageModule)
             {
                 entityName = EntityNames.Module;
                 entityId = _pageModules.GetPageModule(entityId).ModuleId;
             }
-            switch (entityName)
+
+            switch (FormatName(entityName))
             {
                 case EntityNames.Tenant:
                 case EntityNames.ModuleDefinition:
                 case EntityNames.Host:
                 case EntityNames.Job:
                 case EntityNames.Theme:
-                    if (permissionName == PermissionNames.Edit)
+                    if (FormatName(permissionName) == PermissionNames.Edit)
                     {
                         authorized = User.IsInRole(RoleNames.Host);
                     }
@@ -444,7 +433,7 @@ namespace Oqtane.Controllers
                     break;
                 case EntityNames.Site:
                 case EntityNames.Role:
-                    if (permissionName == PermissionNames.Edit)
+                    if (FormatName(permissionName) == PermissionNames.Edit)
                     {
                         authorized = User.IsInRole(RoleNames.Admin);
                     }
@@ -471,7 +460,7 @@ namespace Oqtane.Controllers
                     break;
                 default: // custom entity
                     authorized = true;
-                    if (permissionName == PermissionNames.Edit)
+                    if (FormatName(permissionName) == PermissionNames.Edit)
                     {
                         if (entityId == -1)
                         {
@@ -490,7 +479,7 @@ namespace Oqtane.Controllers
         private bool FilterPrivate(string entityName, int entityId)
         {
             bool filter = false;
-            switch (entityName)
+            switch (FormatName(entityName))
             {
                 case EntityNames.Tenant:
                 case EntityNames.ModuleDefinition:
@@ -539,9 +528,9 @@ namespace Oqtane.Controllers
 
         private void AddSyncEvent(string EntityName, int EntityId, int SettingId, string Action)
         {
-            _syncManager.AddSyncEvent(_alias, EntityName + "Setting", SettingId, Action);
+            _syncManager.AddSyncEvent(_alias, FormatName(EntityName) + "Setting", SettingId, Action);
 
-            switch (EntityName)
+            switch (FormatName(EntityName))
             {
                 case EntityNames.Module:
                 case EntityNames.Page:
@@ -552,6 +541,16 @@ namespace Oqtane.Controllers
                     _syncManager.AddSyncEvent(_alias, EntityName, EntityId, SyncEventActions.Update);
                     break;
             }
+        }
+
+        private string FormatName(string name)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                // entity names and permission names are case sensitive
+                name = name.Substring(0, 1).ToUpper() + name.Substring(1).ToLower();
+            }
+            return name;
         }
     }
 }
