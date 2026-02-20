@@ -1,0 +1,194 @@
+@using Oqtane.Modules.ClubMembers.Models
+@using Oqtane.Modules.ClubMembers.Services
+@using System.Linq
+@namespace Oqtane.Modules.ClubMembers
+@inherits ModuleBase
+@inject IClubMemberService ClubMemberService
+@inject IFileService FileService
+@inject IJSRuntime JsRuntime
+@inject HttpClient Http
+
+<h3>Manage Members</h3>
+
+@if (editing == null)
+{
+    <button class="btn btn-primary mb-2" @onclick="AddNew">Add Member</button>
+    @if (members == null)
+    {
+        <p>Loading...</p>
+    }
+    else if (members.Count == 0)
+    {
+        <p>No members yet.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr><th>Name</th><th></th></tr>
+            </thead>
+            <tbody>
+                @foreach(var m in members)
+                {
+                    <tr>
+                        <td>@m.FirstName @m.LastName</td>
+                        <td>
+                            <button class="btn btn-sm btn-secondary me-1" @onclick="(()=>StartEdit(m))">Edit</button>
+                            <button class="btn btn-sm btn-danger" @onclick="(()=>Delete(m))">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <EditForm Model="editing" OnValidSubmit="Save">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <InputText class="form-control" @bind-Value="editing.FirstName" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <InputText class="form-control" @bind-Value="editing.LastName" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Photo</label>
+            <InputFile OnChange="UploadPhoto" />
+            @if (editing.PhotoFileId != 0)
+            {
+                <div class="mt-2">
+                    <img src="/api/file/download/@editing.PhotoFileId" style="max-height:150px" />
+                </div>
+            }
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ikä</label>
+            <InputText class="form-control" @bind-Value="editing.Ika" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Kuinka pitkään harrastanut</label>
+            <InputText class="form-control" @bind-Value="editing.KuinkaPitkaanHarrastanut" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Pelivälineet</label>
+            <InputText class="form-control" @bind-Value="editing.Pelivaineet" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Miksi Biljardi</label>
+            <InputTextArea class="form-control" @bind-Value="editing.MiksiBiljardi" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Lempi lyönti</label>
+            <InputText class="form-control" @bind-Value="editing.LempiLyonti" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Idoli</label>
+            <InputText class="form-control" @bind-Value="editing.Idoli" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Motto</label>
+            <InputText class="form-control" @bind-Value="editing.Motto" />
+        </div>
+
+        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-secondary ms-2" type="button" @onclick="Cancel">Cancel</button>
+    </EditForm>
+}
+
+@code {
+    private List<ClubMember> members;
+    private ClubMember editing;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (ShouldRender())
+        {
+            members = await ClubMemberService.GetClubMembersAsync(ModuleState.ModuleId);
+        }
+    }
+
+    private void AddNew()
+    {
+        editing = new ClubMember { ModuleId = ModuleState.ModuleId };
+    }
+
+    private void StartEdit(ClubMember m)
+    {
+        editing = new ClubMember();
+        // copy
+        foreach (var prop in typeof(ClubMember).GetProperties())
+        {
+            prop.SetValue(editing, prop.GetValue(m));
+        }
+    }
+
+    private async Task Save()
+    {
+        if (editing.ClubMemberId == 0)
+        {
+            var added = await ClubMemberService.AddClubMemberAsync(editing);
+            members.Add(added);
+        }
+        else
+        {
+            var updated = await ClubMemberService.UpdateClubMemberAsync(editing);
+            var index = members.FindIndex(x => x.ClubMemberId == updated.ClubMemberId);
+            if (index >= 0) members[index] = updated;
+        }
+        editing = null;
+    }
+
+    private async Task Delete(ClubMember m)
+    {
+        if (await JsRuntime.InvokeAsync<bool>("confirm", $"Delete {m.FirstName} {m.LastName} ?"))
+        {
+            await ClubMemberService.DeleteClubMemberAsync(m.ClubMemberId);
+            members.RemoveAll(x => x.ClubMemberId == m.ClubMemberId);
+        }
+    }
+
+    private void Cancel()
+    {
+        editing = null;
+    }
+
+    private async Task UploadPhoto(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            // Upload to Oqtane file api - we need to pick a folder. Use Module folder if exists
+            var folderId = ModuleState.ModuleId; // simplistic, ideally use a dedicated folder
+            using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
+            var content = new MultipartFormDataContent();
+            var scontent = new StreamContent(stream);
+            content.Add(scontent, "formfile", file.Name);
+
+            // call api/file/upload?folder={folderId}
+            var response = await Http.PostAsync($"api/file/upload?folder={folderId}", content);
+            if (response.IsSuccessStatusCode)
+            {
+                // No content returned - but file gets added to folder. To get file id we'd query files
+                var files = await FileService.GetFilesAsync(folderId);
+                var f = files.OrderByDescending(x => x.FileId).FirstOrDefault();
+                if (f != null)
+                {
+                    editing.PhotoFileId = f.FileId;
+                }
+            }
+        }
+    }
+}

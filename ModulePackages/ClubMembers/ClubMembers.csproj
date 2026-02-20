@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <AssemblyName>Oqtane.Modules.ClubMembers</AssemblyName>
+    <RootNamespace>Oqtane.Modules.ClubMembers</RootNamespace>
+    <PackageId>Oqtane.Modules.ClubMembers</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>PoolGarageLappee</Authors>
+    <Description>Oqtane ClubMembers module package</Description>
+    <PackageOutputPath>..\..\nupkgs</PackageOutputPath>
+    <IncludeSymbols>false</IncludeSymbols>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageTags>oqtane;module;clubmembers</PackageTags>
+    <!-- Suppress warnings: NU1608 (Pomelo version mismatch), CS0436 (type conflicts - expected when compiling source files that exist in referenced assemblies) -->
+    <NoWarn>$(NoWarn);NU1608;CS0436</NoWarn>
+    <!-- Allow flexible runtime binding for cross-platform compatibility -->
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>false</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Link server-side source files into this packing project so the compiled assembly contains module server code -->
+    <Compile Include="..\..\Oqtane.Server\Modules\ClubMembers\**\*.cs">
+      <Link>Server\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Compile>
+    <!-- Link client-side source files (services, etc.) -->
+    <Compile Include="..\..\Oqtane.Client\Modules\ClubMembers\**\*.cs">
+      <Link>Client\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Compile>
+    <!-- Link shared model files -->
+    <Compile Include="..\..\Oqtane.Shared\Modules\ClubMembers\**\*.cs">
+      <Link>Shared\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+  <!-- DLL is automatically included in lib folder by SDK-style projects when AssemblyName is set -->
+
+  <ItemGroup>
+    <!-- Include client-side files as package content under content/Modules/ClubMembers/Client -->
+    <None Include="..\..\Oqtane.Client\Modules\ClubMembers\**\*.razor" Pack="true" PackagePath="content/Modules/ClubMembers/Client/%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Include="..\..\Oqtane.Client\Modules\ClubMembers\**\*.css" Pack="true" PackagePath="content/Modules/ClubMembers/Client/%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Include="..\..\Oqtane.Client\Modules\ClubMembers\**\*.json" Pack="true" PackagePath="content/Modules/ClubMembers/Client/%(RecursiveDir)%(Filename)%(Extension)" />
+    <!-- Include shared model files -->
+    <None Include="..\..\Oqtane.Shared\Modules\ClubMembers\**\*.cs" Pack="true" PackagePath="content/Modules/ClubMembers/Shared/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Include migrations and server assets in package content -->
+    <None Include="..\..\Oqtane.Server\Modules\ClubMembers\Migrations\**\*.*" Pack="true" PackagePath="content/Modules/ClubMembers/Server/Migrations/%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Include="..\..\Oqtane.Server\Modules\ClubMembers\Repository\**\*.cs" Pack="true" PackagePath="content/Modules/ClubMembers/Server/Repository/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Reference solution projects needed to build server code -->
+    <ProjectReference Include="..\..\Oqtane.Shared\Oqtane.Shared.csproj" />
+    <ProjectReference Include="..\..\Oqtane.Server\Oqtane.Server.csproj" />
+  </ItemGroup>
+  
+  <!-- Prevent generation of deps.json with strict version requirements -->
+  <PropertyGroup>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+</Project>

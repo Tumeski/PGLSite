@@ -1,0 +1,90 @@
+@using Oqtane.Modules.ClubMembers.Services
+@using Oqtane.Modules.ClubMembers.Models
+@using System.Linq
+@namespace Oqtane.Modules.ClubMembers
+@inherits ModuleBase
+@inject IClubMemberService ClubMemberService
+
+<div class="clubmembers">
+    @if (PageState.EditMode)
+    {
+        <div class="text-center mb-2">
+            <ActionLink Action="Edit" EditMode="true" ResourceKey="Edit" />
+        </div>
+    }
+
+    @if (members == null)
+    {
+        <p>Loading...</p>
+    }
+    else if (members.Count == 0)
+    {
+        <p>No members found.</p>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var member in PagedMembers)
+            {
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="row g-0">
+                            <div class="col-4">
+                                @if (member.PhotoFileId != 0)
+                                {
+                                    <img src="/api/file/download/@member.PhotoFileId" class="img-fluid rounded-start" alt="@member.FirstName @member.LastName" />
+                                }
+                                else
+                                {
+                                    <div class="placeholder bg-secondary" style="height:100%;width:100%"></div>
+                                }
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">@member.FirstName @member.LastName</h5>
+                                    <p class="card-text"><small class="text-muted">@member.Ika</small></p>
+                                    <p class="card-text">@member.MiksiBiljardi</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <nav>
+            <ul class="pagination">
+                <li class="page-item @(page==1?"disabled":"")"><a class="page-link" href="#" @onclick="(()=>ChangePage(page-1))">Prev</a></li>
+                @for (int i=1;i<=PageCount;i++)
+                {
+                    <li class="page-item @(page==i?"active":"")"><a class="page-link" href="#" @onclick="(()=>ChangePage(i))">@i</a></li>
+                }
+                <li class="page-item @(page==PageCount?"disabled":"")"><a class="page-link" href="#" @onclick="(()=>ChangePage(page+1))">Next</a></li>
+            </ul>
+        </nav>
+    }
+</div>
+
+@code {
+    private List<ClubMember> members;
+    private int page = 1;
+    private int pageSize = 10;
+
+    private IEnumerable<ClubMember> PagedMembers => members.Skip((page-1)*pageSize).Take(pageSize);
+    private int PageCount => (int)Math.Ceiling((double)(members?.Count ?? 0) / pageSize);
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (ShouldRender())
+        {
+            members = await ClubMemberService.GetClubMembersAsync(ModuleState.ModuleId);
+        }
+    }
+
+    private void ChangePage(int p)
+    {
+        if (p<1) p=1;
+        if (p>PageCount) p=PageCount;
+        page = p;
+    }
+}
