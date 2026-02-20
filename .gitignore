@@ -38,3 +38,5 @@ Oqtane.Server/wwwroot/Themes/Templates/*
 !Oqtane.Server/wwwroot/Themes/Templates/External
 /Oqtane.Server/Properties/PublishProfiles/FTPProfile.pubxml
 /Oqtane.Server/.config/dotnet-tools.json
+/dbbacks
+/publish
