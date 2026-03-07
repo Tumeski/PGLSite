@@ -40,3 +40,4 @@ Oqtane.Server/wwwroot/Themes/Templates/*
 /Oqtane.Server/.config/dotnet-tools.json
 /dbbacks
 /publish
+/Oqtane.Server/appsettings.json
