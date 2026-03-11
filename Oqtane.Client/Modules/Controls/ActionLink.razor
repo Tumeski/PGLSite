@@ -148,12 +148,20 @@
 
         if (!string.IsNullOrEmpty(IconName))
         {
-            // Check if IconName starts with "oi oi-"
-            bool startsWithOiOi = IconName.StartsWith("oi oi-");
-
-            if (!startsWithOiOi && !IconName.Contains(" "))
+            if (!IconName.Contains(" "))
             {
-                IconName = "oi oi-" + IconName;
+                if (IconName.StartsWith("fa-", StringComparison.OrdinalIgnoreCase))
+                {
+                    IconName = "fa-solid " + IconName;
+                }
+                else if (!IconName.StartsWith("oi-", StringComparison.OrdinalIgnoreCase) && !IconName.StartsWith("oi oi-", StringComparison.OrdinalIgnoreCase))
+                {
+                    IconName = "oi oi-" + IconName;
+                }
+                else if (IconName.StartsWith("oi-", StringComparison.OrdinalIgnoreCase))
+                {
+                    IconName = "oi " + IconName;
+                }
             }
             _iconSpan = $"<span class=\"{IconName}\"></span>{(IconOnly ? "" : "&nbsp")}";
         }
